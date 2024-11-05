@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
     <div className='footer bg-neutral-100 flex justify-center items-center p-6'>
-        <div className=''>
+        <div>
           <Link to='/'>Home</Link>
           <Link to='/trading-hub'>Trade Hub</Link>
           <Link to='/catalog'>Catalog</Link>
@@ -15,4 +15,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer;

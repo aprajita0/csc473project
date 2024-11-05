@@ -1,15 +1,17 @@
-import Footer from './components/Footer'
-import Navbar from './components/Navbar'
-import Catalog from './routes/Catalog'
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+import Catalog from './routes/Catalog';
 
 const App = () => {
   return (
-    <div className='app'>
+    <div className="app flex flex-col h-screen justify-between"> {/* Flex container with full height */}
       <Navbar />
-      <Catalog />
+      <div className="flex-grow"> {/* Main content area that grows */}
+        <Catalog />
+      </div>
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
