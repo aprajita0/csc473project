@@ -1,8 +1,8 @@
-import React from 'react'
-
 const Catalog = () => {
   return (
-    <div>Catalog</div>
+    <div className="catalog h-dvh">
+      catalog
+    </div>
   )
 }
 
