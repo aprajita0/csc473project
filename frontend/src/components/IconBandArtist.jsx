@@ -1,7 +1,7 @@
 
 const IconBandArtist = ({ title, type }) => {
     return (
-        <div className={`Icon${type === 'band' ? 'Band' : 'Artist'} flex hover:scale-105`}>
+        <div className={`Icon${type === 'band' ? 'Band' : 'Artist'} flex`}>
             <a href='' className="block flex flex-col items-center justify-center text-center">
                 {type === 'band' ? (
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
