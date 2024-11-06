@@ -7,10 +7,11 @@ const Catalog = () => {
   const repeatCount = 10;
 
   return (
-    <div className="Catalog h-max flex flex-col mt-28">
+    <div>
       <Navbar />
-      <div className="CatalogDiv">
-        <div className="CatalogSearchFilter bg-white flex justify-center">
+      <div className="Catalog h-max flex flex-col mt-24">
+
+        <div className="CatalogSearchFilter bg-neutral-100 flex justify-center">
           <div className="CatalogFilterBar p-4">
             <input className="border rounded-md p-2" type="search" placeholder="Search (artist/band)" />
           </div>
@@ -22,6 +23,7 @@ const Catalog = () => {
             <IconBandArtist type='artist' title='Solo Artists' />
           </div>
         </div>
+
         <div className="CatalogMain flex-grow p-8">
           <div className="CatalogContent gap-4 grid grid-flow-row auto-rows-max" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
             {Array.from({ length: repeatCount }).map((_, index) => (
@@ -40,6 +42,7 @@ const Catalog = () => {
             ))}
           </div>
         </div>
+
       </div>
       <Footer />
 
