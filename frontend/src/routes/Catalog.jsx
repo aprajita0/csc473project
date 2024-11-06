@@ -29,14 +29,14 @@ const Catalog = () => {
             {Array.from({ length: repeatCount }).map((_, index) => (
               <CardBand
                 key={index}
-                band="BTS"
+                groupName="BTS"
                 image="https://assets.teenvogue.com/photos/5a0b5dad0709a85e4898eec7/4:3/w_4552,h_3414,c_limit/Gettyimgs-688759646.jpg"
               />
             ))}
             {Array.from({ length: repeatCount }).map((_, index) => (
               <CardBand
                 key={index}
-                band="NewJeans"
+                groupName="NewJeans"
                 image="https://www.billboard.com/wp-content/uploads/2024/02/cover-new-jeans-billboard-2024-bb3-ssam-kim-group-3-1548.jpg"
               />
             ))}
