@@ -1,4 +1,5 @@
 import React from 'react'
+import {useNavigate } from 'react-router-dom'; 
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import landing_image from '../assets/landing_page.png'
@@ -6,6 +7,8 @@ import landing_image from '../assets/landing_page.png'
 import './LandingPage.css'; 
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className='LandingPage mt-28 flex flex-col flex-grow justify-between min-h-screen'>
       <Navbar />
@@ -15,7 +18,7 @@ const LandingPage = () => {
             <h1>Trade, Organize, and Meet Enthusiastic Collectors!</h1>
             <p>MyIdolList provides a platform for enthusiasts of photocard trading to trade and organize their photocards.</p>
             <div className="landing-buttons">
-              <button className="get-started">Get Started</button>
+              <button className="get-started" onClick={() => navigate('/Login')}>Get Started</button>
               <button className="learn-more">Learn More</button>
             </div>
           </div>
