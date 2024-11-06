@@ -1,7 +1,9 @@
 
 const UserTradePostCard = () => {
   return (
-    <div className='UserTradePostCard bg-neutral-100 p-2 w-64 text-center border rounded-lg'>
+    <div className='UserTradePostCard bg-neutral-100 p-2 w-64 
+                    drop-shadow-lg text-center border rounded-lg
+                    hover:brightness-95'>
       
       <div id='trade-post-card-header' className='flex flex-col justify-center'>
         <div id='trader-info' className='flex justify-center'>
@@ -10,17 +12,17 @@ const UserTradePostCard = () => {
           </svg>
           <span id='trade-post-username' className='text-xs pt-0.5'>userName</span>
         </div>
-        <span className='BuySell text-xl font-bold'>BUY/SELL - $price</span>
+        <span className='BuySell text-xl font-extrabold'>BUY|SELL - $userSetPrice</span>
       </div>
 
-      <div className='flex justify-center'>
-        <img className='TradePostImage max-h-72' src='https://i.pinimg.com/736x/ad/92/a8/ad92a8a6ac100aebec21e18630325346.jpg' />
-      </div>
+      <a href='' className='flex justify-center'>
+        <img className='TradePostImage max-h-72 rounded-lg drop-shadow-md' src='https://i.pinimg.com/736x/ad/92/a8/ad92a8a6ac100aebec21e18630325346.jpg' />
+      </a>
 
       <div id='trade-desc'>
         <div className=''>
-          <span id='trade-post-card-idol' className='text-lg font-bold'>idolName</span>
-          <span id='trade-post-card-album' className='text-sm'> - collectionName (year)</span>
+          <p id='trade-post-card-idol' className='text-lg font-bold'>idolName (groupName)</p>
+          <p id='trade-post-card-album' className='text-sm'>collectionName (year)</p>
         </div>
       </div>
 
