@@ -1,0 +1,89 @@
+.container {
+    max-width: 1200px;
+    margin-left: 100px;
+    margin-top: 40px;
+}
+
+.top-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.landing-slogan {
+    max-width: 600px;
+}
+
+.landing-slogan  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.landing-slogan  p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.landing-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.get-started {
+    background-color: #ddd;
+    color: #000;
+    padding: 8px;
+    border-radius: 30px;
+    width: 150px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.get-started:hover {
+    background-color: #000; 
+    color: #fff;
+}
+
+.learn-more {
+    background-color: #ddd;
+    color: #000;
+    padding: 8px;
+    width: 150px;
+    border-radius: 30px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.learn-more:hover {
+    background-color: #000; 
+    color: #fff;
+}
+
+.landing-image {
+    justify-content: space-around;
+    align-items: flex-start; 
+    margin-left: auto;
+    height: 400px;
+}
+
+.our-features {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start; 
+    margin-top: 40px;
+    min-height: 150px;
+}
+
+.feature {
+    text-align: center;
+    max-width: 300px;
+}
+
+.feature h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+    color: #555;
+}
