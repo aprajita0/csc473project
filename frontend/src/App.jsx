@@ -4,7 +4,7 @@ import Catalog from './routes/Catalog';
 
 const App = () => {
   return (
-    <div className="app flex flex-col h-screen justify-between"> {/* Flex container with full height */}
+    <div className="App flex flex-col justify-between"> {/* Flex container with full height */}
       <Navbar />
       <div className="flex-grow"> {/* Main content area that grows */}
         <Catalog />
