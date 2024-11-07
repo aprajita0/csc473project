@@ -24,6 +24,10 @@ const Add_Card = () => {
                 <input className="field-input" type="text" id="card_name" placeholder="Enter the title of your photocard" required/>
               </div>
               <div className="label-container">
+                <label className="field-label" htmlFor="card_image">Photocard Photo:</label>
+                <input className="field-input" type="text" id="card_image" placeholder="Enter the url for your photocard image" required/>
+              </div>
+              <div className="label-container">
                 <label className="field-label" htmlFor="artist">Artist/Group:</label>
                 <select className="field-input" id="artistGroup" value={artistGroup} onChange={(e) => setItemType(e.target.value)} required>
                     <option value="">Select an Artist/Group</option>
@@ -51,3 +55,4 @@ const Add_Card = () => {
 };
 
 export default Add_Card;
+
