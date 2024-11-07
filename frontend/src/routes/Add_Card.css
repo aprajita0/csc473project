@@ -1,0 +1,52 @@
+.new-container {
+    max-width: 1200px;
+    margin-left: 100px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end; 
+    padding-right: 200px;
+}
+
+.top-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+.page-message {
+    max-width: 600px;
+}
+
+.page-message  h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.label-container {
+    max-width: 600px;
+}
+
+.field-label {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.field-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 100%; 
+    margin-top: 10px;
+    box-sizing: border-box; 
+    margin-bottom: 10px;
+}
+
+.add-image {
+    justify-content: space-around;
+    align-items: flex-start; 
+    height: 500px;
+    padding-right: 100px;
+}
