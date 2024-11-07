@@ -8,6 +8,7 @@ const Navbar = () => {
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedInStatus);
+    console.log('logged in:', loggedInStatus); 
   }, []);
 
   const handleProfileClick = () => {
