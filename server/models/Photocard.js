@@ -6,7 +6,7 @@ const PhotocardSchema = new mongoose.Schema({
     title: { type: String, maxlength: 100 },
     image: {type: String, required: true},
     details: { type: String, maxlength: 300 },
-    cost: { type: mongoose.Types.Decimal128, required: true }, 
+    cost: { type: mongoose.Types.Decimal128, default: 0 }, 
     posting_date: { type: Date, default: Date.now }
   });
 

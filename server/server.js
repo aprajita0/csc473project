@@ -4,12 +4,13 @@ const uri = process.env.MONGO_URI;
 const mongoose = require('mongoose');
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
+const uploadRoutes = require('./routes/upload');
 const app = express();
 
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
-
+app.use('/api', uploadRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World');
