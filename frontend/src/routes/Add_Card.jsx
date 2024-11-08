@@ -20,19 +20,16 @@ const Add_Card = () => {
             <div className="page-message">
               <h1>Add a PhotoCard</h1>
               <div className="label-container">
-                <label className="field-label" htmlFor="title">Title:</label>
-                <input className="field-input" type="text" id="card_name" placeholder="Enter the title of your photocard" required/>
+                <label className="field-label" htmlFor="title">Idol Name:</label>
+                <input className="field-input" type="text" id="card_name" placeholder="Enter the title of your idol" required/>
               </div>
               <div className="label-container">
                 <label className="field-label" htmlFor="card_image">Photocard Photo:</label>
-                <input className="field-input" type="text" id="card_image" placeholder="Enter the url for your photocard image" required/>
-              </div>
+                <input className="field-input" type="file"id="card_image"accept="image/jpeg, image/jpg" required/>
+            </div>
               <div className="label-container">
-                <label className="field-label" htmlFor="artist">Artist/Group:</label>
-                <select className="field-input" id="artistGroup" value={artistGroup} onChange={(e) => setItemType(e.target.value)} required>
-                    <option value="">Select an Artist/Group</option>
-                    <option value="selling">empty for now</option>
-                </select>
+                <label className="field-label" htmlFor="artist">Group (If available):</label>
+                <input className="field-input" type="text" id="artistGroup" placeholder="Enter the name of the group your artist belongs to"/>
               </div>
               <div className="label-container">
                 <label className="field-label" htmlFor="amount">Cost:</label>
@@ -43,8 +40,12 @@ const Add_Card = () => {
                 <textarea className="field-input" id="add-details" placeholder="Enter the details of your photocard" requiredrows="1"></textarea>
               </div>
               <div className="label-container">
-                <label className="field-label" htmlFor="date">Date/Time of Posting:</label>
-                <input className="field-input" type="datetime-local" id="listing_date" placeholder="Date Listing" required/>
+                <label className="field-label" htmlFor="collection">Collection Name:</label>
+                <input className="field-input" type="text" id="collectionName" placeholder="Enter the collection name"/>
+              </div>
+              <div className="label-container">
+                <label className="field-label" htmlFor="date">Year Released:</label>
+                <input   className="field-input" type="number"id="year_released"placeholder="Enter the year released" min="1900"step="1"/>
               </div>
             </div>
           </section>
@@ -55,4 +56,5 @@ const Add_Card = () => {
 };
 
 export default Add_Card;
+
 
