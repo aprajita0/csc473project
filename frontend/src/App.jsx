@@ -1,17 +1,27 @@
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './routes/LandingPage';
+import Login from './routes/Login'; 
+import Register from './routes/Register'; 
+import Add_Card from './routes/Add_Card'; 
 import Catalog from './routes/Catalog';
+import TradingHub from './routes/TradingHub';
+import Messages from './routes/Messages';
 
 const App = () => {
   return (
-    <div className="App flex flex-col justify-between"> {/* Flex container with full height */}
-      <Navbar />
-      <div className="flex-grow"> {/* Main content area that grows */}
-        <Catalog />
-      </div>
-      <Footer />
+    <div className="App">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Add_Card" element={<Add_Card />} />
+          {/* <Route path="/trading-hub" element={<TradingHub />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/messages" element={<Messages />} /> */}
+        </Routes>
     </div>
   );
 }
 
 export default App;
+
