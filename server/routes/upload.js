@@ -44,15 +44,6 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       const { artist_name, title, details, cost } = req.body;
       
   
-      // Check if the artist already exists
-      let artist = await Artist.findOne({ name: artist_name });
-      
-      // If artist does not exist, create a new artist entry
-      if (!artist) {
-        artist = new Artist({ name: artist_name });
-        await artist.save();
-      }
-  
       // Upload image to S3
       const s3Params = {
         Bucket: process.env.S3_BUCKET_NAME,
@@ -64,7 +55,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   
       // Create photocard with the artist's ID and S3 URL
       const photocard = new Photocard({
-        artist_id: artist._id,  // Use the found or created artist's ID
+        artist_name,  // Use the found or created artist's ID
         title,
         image: s3Data.Location,  // S3 URL for the image
         details,
