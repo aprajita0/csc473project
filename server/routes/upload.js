@@ -17,7 +17,7 @@ AWS.config.update({
 // Upload to S3
 router.post('/upload', upload.single('image'), async (req, res) => {
     try {
-      // Set S3 upload parameters without the ACL
+      
       const params = {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: `images/${Date.now()}-${req.file.originalname}`, 
@@ -47,15 +47,15 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       // Upload image to S3
       const s3Params = {
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: `images/${Date.now()}-${req.file.originalname}`, // Unique key for image
+        Key: `images/${Date.now()}-${req.file.originalname}`, 
         Body: req.file.buffer,
         ContentType: req.file.mimetype
       };
       const s3Data = await s3.upload(s3Params).promise();
   
-      // Create photocard with the artist's ID and S3 URL
+      
       const photocard = new Photocard({
-        artist_name,  // Use the found or created artist's ID
+        artist_name,  
         title,
         image: s3Data.Location,  // S3 URL for the image
         details,
