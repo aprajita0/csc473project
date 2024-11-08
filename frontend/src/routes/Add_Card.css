@@ -47,6 +47,7 @@
 .add-image {
     justify-content: space-around;
     align-items: flex-start; 
-    height: 540px;
-    padding-right: 70px;
+    height: 650px;
+    padding-right: 50px;
 }
+
