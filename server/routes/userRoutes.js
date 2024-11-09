@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../models/Users'); 
+const Photocard = require('../models/Photocard');
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -80,5 +81,34 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ error: 'Error logging in', details: err.message });
     }
 });
+
+// Get user profile endpoint
+router.get('/profile', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        res.status(200).json({ user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+router.get('/photocards', async (req, res) => {
+    try {
+        // Retrieve all photocards from the database
+        const photocards = await Photocard.find();
+
+        // Respond with the retrieved photocards
+        res.status(200).json({ photocards });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching photocards', details: error.message });
+    }
+});
+
 
 module.exports = router;
