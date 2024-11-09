@@ -12,7 +12,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-    padding-top: 20px;
+    padding-top: 5px;
 }
 
 .page-message {
@@ -47,7 +47,37 @@
 .add-image {
     justify-content: space-around;
     align-items: flex-start; 
-    height: 650px;
-    padding-right: 50px;
+    height: 700px;
+    padding-top: 30px;
+    padding-right: 80px;
 }
 
+.submit-card {
+    background-color: #ddd;
+    color: #000;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 8px;
+    width: 150px;
+    border-radius: 30px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.submit-card:hover {
+    background-color: #000; 
+    color: #fff;
+}
+
+.return-card {
+    background-color: #ddd;
+    color: #000;
+    padding: 8px;
+    border-radius: 30px;
+    width: 150px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.return-card:hover {
+    background-color: #000; 
+    color: #fff;
+}
