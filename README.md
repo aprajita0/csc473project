@@ -37,7 +37,7 @@
 <h3 align="center">MyIdolList</h3>
 
   <p align="center">
-    project_description
+    A streamlined and user-friendly platform where K-pop fans can not only manage their photocard collections but also engage in trading, buying, and selling within a dedicated community. 
     <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
