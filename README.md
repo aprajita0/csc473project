@@ -98,7 +98,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 * [![Vite.js][Vite.js-badge]][Vite.js-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![Node.js][Node.js-badge]][Node.js-url]
-
+* [![AWS][AWS-badge]][AWS-url]
+* [![MongoDB][MongoDB-badge]][MongoDB-url]
+  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -247,3 +249,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Vite.js-url]: https://vitejs.dev/
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
+[AWS-badge]: https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white
+[AWS-url]: https://aws.amazon.com/
+[MongoDB-badge]: https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white
+[MongoDB-url]: https://www.mongodb.com/
