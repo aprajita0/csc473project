@@ -207,7 +207,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 - [ ]()Jezlea Ortega - jezlea.o@gmail.com
 - [ ]()Melchizedek De Castro - email@email_client.com
-- [ ]()Aprajita Srivastava - email@email_client.com
+- [ ]()Aprajita Srivastava - asrivas000@citymail.cuny.edu
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
