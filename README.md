@@ -95,6 +95,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 * [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![Node.js][Node.js-badge]][Node.js-url]
+* [![Tailwind CSS][TailwindCSS-badge]][TailwindCSS-url]
+* [![Vite.js][Vite.js-badge]][Vite.js-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
