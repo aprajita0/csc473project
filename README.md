@@ -206,8 +206,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 Jezlea Ortega - jezlea.o@gmail.com
-Melchizedek De Castro - email@email_client.com
-Aprajita Srivastava - email@email_client.com
+*Melchizedek De Castro - email@email_client.com
+*Aprajita Srivastava - email@email_client.com
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
