@@ -8,14 +8,23 @@ const Navbar = () => {
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedInStatus);
-    console.log('logged in:', loggedInStatus); 
+    console.log('logged in:', loggedInStatus);
+
+    window.onbeforeunload = () => {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('token');
+    };
+
+    return () => {
+      window.onbeforeunload = null;
+    };
   }, []);
 
   const handleProfileClick = () => {
     if (!isLoggedIn) {
-      navigate('/login'); 
+      navigate('/login');
     } else {
-      navigate('/profile'); 
+      navigate('/profile');
     }
   };
 
