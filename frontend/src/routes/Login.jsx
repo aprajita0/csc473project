@@ -32,7 +32,8 @@ const Login = () => {
         navigate('/profile'); 
       } else {
         const result = await response.json();
-        setError(result.message || 'Login failed. Please try again.');
+        setError(result.message || 'Login failed');
+        alert("Wrong username or password, please try again");
       }
     } catch (err) {
       console.error('Error during login:', err);
