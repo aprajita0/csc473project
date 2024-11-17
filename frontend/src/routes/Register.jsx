@@ -29,10 +29,12 @@ const Register = () => {
         });
 
         if (response.ok) {
-            navigate('/'); 
+          navigate('/login');
+          alert("Account created!");
         } else {
-            const result = await response.json();
-            setError(result.message || 'Error with registration');
+          const result = await response.json();
+          console.log(result);
+          alert(result.message);
         }
     } catch (err) {
         setError('Server error. Please try again later.');
@@ -74,3 +76,4 @@ const Register = () => {
 };
 
 export default Register;
+
