@@ -3,7 +3,7 @@ const UserTradePostCard = () => {
   return (
     <div className='UserTradePostCard bg-neutral-100 p-2 w-64 
                     drop-shadow-lg text-center border rounded-lg
-                    hover:brightness-95'>
+                    hover:brightness-95 hover:scale-105 ease-in-out duration-300'>
       
       <div id='trade-post-card-header' className='flex flex-col justify-center'>
         <div id='trader-info' className='flex justify-center'>
@@ -15,7 +15,7 @@ const UserTradePostCard = () => {
         <span className='BuySell text-xl font-extrabold'>BUY|SELL - $userSetPrice</span>
       </div>
 
-      <a href='' className='flex justify-center'>
+      <a href='/tradepost' className='flex justify-center'>
         <img className='TradePostImage max-h-72 rounded-lg drop-shadow-md' src='https://i.pinimg.com/736x/ad/92/a8/ad92a8a6ac100aebec21e18630325346.jpg' />
       </a>
 

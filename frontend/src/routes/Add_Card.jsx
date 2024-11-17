@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import kpop_card from '../assets/photocard.png';
 import './Add_Card.css';
@@ -117,4 +117,3 @@ const Add_Card = () => {
 };
 
 export default Add_Card;
-

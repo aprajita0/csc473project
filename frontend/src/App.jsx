@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from './routes/LandingPage';
 import Login from './routes/Login'; 
 import Register from './routes/Register'; 
@@ -15,9 +15,9 @@ const App = () => {
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Add_Card" element={<Add_Card />} />
-          {/* <Route path="/trading-hub" element={<TradingHub />} />
+          <Route path="/trading-hub" element={<TradingHub />} />
           <Route path="/catalog" element={<Catalog />} />
-          <Route path="/messages" element={<Messages />} /> */}
+          <Route path="/messages" element={<Messages />} />
         </Routes>
     </div>
   );

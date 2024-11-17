@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <div className="Navbar bg-white flex justify-between items-center px-16 py-8 fixed top-0 left-0 right-0 z-50 shadow-md">
-      <div className='text-2xl text-slate-600 font-black hover:scale-110'>
+      <div className='text-2xl text-slate-600 font-black hover:scale-125 ease-in-out duration-300'>
         <Link to='/'>MyIdolList</Link>
       </div>
 
