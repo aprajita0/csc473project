@@ -97,6 +97,44 @@ router.get('/profile', authMiddleware, async (req, res) => {
     }
 });
 
+router.post('/editProfile', authMiddleware, async (req, res) => {
+    const allowedUpdates = [
+        'username',
+        'email',
+        'profile_pic',
+        'full_name',
+        'bio',
+        'address_line1',
+        'address_line2'
+    ]; 
+
+    const updates = Object.keys(req.body); 
+    const isValidOperation = updates.every(field => allowedUpdates.includes(field));
+
+    if (!isValidOperation) {
+        return res.status(400).json({ error: 'Invalid updates!' });
+    }
+
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        // Update fields dynamically
+        updates.forEach(field => {
+            user[field] = req.body[field];
+        });
+
+        await user.save(); 
+        res.status(200).json({ message: 'Profile updated successfully.', user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+
 router.get('/photocards', async (req, res) => {
     try {
         // Retrieve all photocards from the database
