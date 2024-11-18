@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className="Footer bg-neutral-100 p-8 w-full flex justify-center space-x-12">
+    <div className="Footer bg-neutral-100 p-8 w-full flex justify-center space-x-12 relative">
       <div className='my-idol-list flex flex-col justify-center'>
         {/* <p className='text-2xl font-bold'>MyIdolList</p> */}
         <div className='text-2xl font-black'>

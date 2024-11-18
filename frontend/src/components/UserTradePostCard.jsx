@@ -15,7 +15,7 @@ const UserTradePostCard = () => {
         <span className='BuySell text-xl font-extrabold'>BUY|SELL - $userSetPrice</span>
       </div>
 
-      <a href='/tradepost' className='flex justify-center'>
+      <a href='/tradepost' className='flex justify-center drop-shadow-md'>
         <img className='TradePostImage max-h-72 rounded-lg drop-shadow-md' src='https://i.pinimg.com/736x/ad/92/a8/ad92a8a6ac100aebec21e18630325346.jpg' />
       </a>
 
