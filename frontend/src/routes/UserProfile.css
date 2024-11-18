@@ -1,4 +1,4 @@
-/* .container {
+.container {
     max-width: 1200px;
     margin-left: 100px;
     margin-top: 10px;
@@ -9,7 +9,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-} */
+}
 
 .welcome-message {
     max-width: 600px;
@@ -29,15 +29,22 @@
     margin-bottom: 20px;
 }
 
-.bio {
+.bio-input {
+    padding: 5px;
+    border: 1px solid #ccc;
     font-size: 18px;
+    border-radius: 4px;
     margin-bottom: 20px;
+    width: 100%; 
+    min-width: 900px;
+    box-sizing: border-box; 
 }
 
 .label {
     font-size: 17px;
     margin-top: 50px;
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
 .email {
@@ -45,12 +52,14 @@
     margin-bottom: 20px;
 }
 
-.address1 {
-    font-size: 15px;
-    margin-bottom: 20px;
-}
-
-.address2 {
+.address-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    border-radius: 4px;
+    width: 100%; 
+    min-width: 400px;
+    box-sizing: border-box; 
     font-size: 15px;
     margin-bottom: 20px;
 }
@@ -115,4 +124,57 @@
     color: #ffffff;
   }
 
+  @media (max-width: 768px) {
+    .top-container {
+        flex-direction: column;
+    }
+
+    .welcome-message{
+        max-width: 100%; 
+    }
+
+    .info-container {
+        max-width: 100%; 
+    }
+
+    .bio-input{
+        min-width: 100%; 
+    }
+
+    .address-input {
+        min-width: 100%; 
+    }
+
+    .add-button{
+        width: 60px; 
+        height: 60px;
+    }
+
+    .logout-button {
+        width: 90px; 
+        height: 30px;
+    }
+
+    .welcome-message h1 {
+        font-size: 24px;
+    }
+
+    .container {
+        margin-left: 5px;
+        margin-right: 5px; 
+    }
+
+    .fullName{
+        font-size: 16px; 
+    }
+    .emai{
+        font-size: 16px; 
+    }
+    .label{
+        font-size: 16px; 
+    }
+    .address-input {
+        font-size: 16px; 
+    }
+}
 
