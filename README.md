@@ -213,7 +213,7 @@ Project Link: [https://github.com/aprajita0/csc473project])
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()https://tailwindui.com/components
+* []() [Tailwind UI Components](https://tailwindui.com/components)
 * []()
 * []()
 
