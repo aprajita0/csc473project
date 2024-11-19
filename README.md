@@ -123,11 +123,15 @@
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+4. Install VITE
+   ```sh
+   npm install vite
+   ```
+5. Enter your API in `config.js`
    ```js
    const API_KEY = 'ENTER YOUR API';
    ```
-5. Change git remote url to avoid accidental pushes to base project
+6. Change git remote url to avoid accidental pushes to base project
    ```sh
    git remote set-url origin github_username/repo_name
    git remote -v # confirm the changes
@@ -151,10 +155,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Trade Photocards
+- [ ] Manage a Photocard Collection
+- [ ] Meet other collectors and traders
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
