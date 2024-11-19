@@ -59,6 +59,7 @@ const Add_Card = () => {
       const result = await response.json();
       if (result.success) {
         navigate('/Profile');
+        alert('Photocard added!');
       } else {
         alert('Failed to add your photocard');
       }
