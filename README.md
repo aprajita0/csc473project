@@ -214,8 +214,8 @@ Project Link: [https://github.com/aprajita0/csc473project])
 ## Acknowledgments
 
 * []() [Tailwind UI Components](https://tailwindui.com/components)
-* []()
-* []()
+* []() [Public API Guide](https://rapidapi.com/thunderapi-thunderapi-default/api/k-pop/playground/apiendpoint_6bda9b1f-7666-4933-a50b-da6de336dacb)
+* []() [CSS Styling Guide](https://www.w3schools.com/css/css_list.asp)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
