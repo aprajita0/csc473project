@@ -206,7 +206,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 - [ ]()Jezlea Ortega - jezlea.o@gmail.com
-- [ ]()Melchizedek De Castro - email@email_client.com
+- [ ]()Melchizedek De Castro - de.melchizedek.castro@gmail.com
 - [ ]()Aprajita Srivastava - aprajita0625@gmail.com
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
@@ -218,7 +218,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
+* [](https://tailwindui.com/components)
 * []()
 * []()
 
