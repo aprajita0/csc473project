@@ -17,7 +17,7 @@
 
 .welcome-message  h1 {
     font-size: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .info-container {
@@ -25,8 +25,33 @@
 }
 
 .fullName {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.enter-name {
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    width: 100%; 
+    min-width: 900px;
+    box-sizing: border-box; 
+}
+
+.display-size {
     font-size: 18px;
     margin-bottom: 20px;
+    min-width: 0; 
+    max-width: 900px;
+    width: 100%; 
+    box-sizing: border-box; 
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal; 
 }
 
 .bio-input {
@@ -41,15 +66,14 @@
 }
 
 .label {
-    font-size: 17px;
+    font-size: 18px;
     margin-top: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: bold;
 }
 
 .email {
-    font-size: 15px;
-    margin-bottom: 20px;
+    font-size: 16px;
 }
 
 .address-input {
@@ -60,7 +84,7 @@
     width: 100%; 
     min-width: 400px;
     box-sizing: border-box; 
-    font-size: 15px;
+    font-size: 16px;
     margin-bottom: 20px;
 }
 
@@ -100,12 +124,13 @@
     align-items: center;
     width: 100%; 
     padding-right: 40px;
+    gap: 10px;
     z-index: 3;
 }
 
 
 .logout-button {
-    width: 80px; 
+    width: 100px; 
     height: 40px;
     background-color: #ddd;
     color: #000;
@@ -122,6 +147,12 @@
 .logout-button:hover {
     background-color: #000000;
     color: #ffffff;
+  }
+
+  @media (min-width: 1200px) {
+    .display-size {
+      width: 900px;
+    }
   }
 
   @media (max-width: 768px) {
