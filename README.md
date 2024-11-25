@@ -30,8 +30,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/aprajita0/csc473project">
+    <img src="https://tinyurl.com/myidollist" alt="MyIdolList">
   </a>
 
 <h3 align="center">MyIdolList</h3>
@@ -85,8 +85,6 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -108,12 +106,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
 * npm
   ```sh
   npm install npm@latest -g
@@ -130,11 +123,15 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+4. Install VITE
+   ```sh
+   npm install vite
+   ```
+5. Enter your API in `config.js`
    ```js
    const API_KEY = 'ENTER YOUR API';
    ```
-5. Change git remote url to avoid accidental pushes to base project
+6. Change git remote url to avoid accidental pushes to base project
    ```sh
    git remote set-url origin github_username/repo_name
    git remote -v # confirm the changes
@@ -151,6 +148,15 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
+#### Trading Hub
+<img src="https://tinyurl.com/2f8z5j75" alt="Trading Hub">
+
+#### User's Trade Post
+<img src="https://tinyurl.com/yae9z9k2" alt="User Trade Post Page">
+
+#### Photocards Catalog
+<img src="https://tinyurl.com/yhjcwfsw" alt="Photocards Catalog">
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -158,10 +164,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Trade Photocards
+- [ ] Manage a Photocard Collection
+- [ ] Meet other collectors and traders
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
@@ -187,11 +192,6 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/github_username/repo_name/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=github_username/repo_name" alt="contrib.rocks image" />
-</a>
-
-
 
 <!-- LICENSE -->
 ## License
@@ -206,10 +206,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 - [ ]()Jezlea Ortega - jezlea.o@gmail.com
-- [ ]()Melchizedek De Castro - email@email_client.com
+- [ ]()Melchizedek De Castro - de.melchizedek.castro@gmail.com
 - [ ]()Aprajita Srivastava - aprajita0625@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/aprajita0/csc473project])
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -218,9 +218,9 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* []() [Tailwind UI Components](https://tailwindui.com/components)
+* []() [Public API Guide](https://rapidapi.com/thunderapi-thunderapi-default/api/k-pop/playground/apiendpoint_6bda9b1f-7666-4933-a50b-da6de336dacb)
+* []() [CSS Styling Guide](https://www.w3schools.com/css/css_list.asp)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

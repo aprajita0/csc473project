@@ -2,9 +2,9 @@
 const CardBand = ({ groupName, image }) => {
     return (
         <div className="CardBand p-4 bg-neutral-100 border-black rounded-md drop-shadow-lg 
-                        hover:brightness-95
+                        hover:brightness-90 hover:scale-105 ease-in-out duration-200
                         flex justify-center align-center">
-            <a href="">
+            <a href="" className="drop-shadow-md">
                 <img
                     src={image}
                     alt={groupName}
