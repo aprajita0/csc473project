@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../models/Users'); 
 const Photocard = require('../models/Photocard');
+const Collection = require('../models/Collection');
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -147,6 +148,46 @@ router.get('/photocards', async (req, res) => {
         res.status(500).json({ error: 'Error fetching photocards', details: error.message });
     }
 });
+
+router.post('/add-photocard-collection', authMiddleware, async (req, res) => {
+    try {
+        const { photocard_id } = req.body;
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const collection = new Collection({
+            owner_id: user._id, 
+            photocard_id: photocard_id
+        });
+
+        await collection.save();
+        res.status(201).json({ message: 'Photocard added to collection successfully.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error adding photocard to collection', details: error.message });
+    }
+});
+
+router.get('/collection', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const collection = await Collection.find({ owner_id: user._id })
+            .populate('photocard_id');
+
+        res.status(200).json({ collection });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching collection', details: error.message });
+    }
+});    
+
 
 
 module.exports = router;

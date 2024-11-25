@@ -16,8 +16,8 @@ app.get('/', (req, res) => {
     res.send('Hello World');
   })
   
-app.listen(5001, () => {
-    console.log('Server is running on port 5001');
+app.listen(8000, () => {
+    console.log('Server is running on port 5000');
   })
 
 mongoose.connect(uri)
