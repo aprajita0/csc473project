@@ -190,7 +190,7 @@ const UserProfile = () => {
         </section>
         <section className="photo-card-section mt-10">
           <h2 className="text-xl font-bold text-center mb-4">My Photocard Collection</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-16 mx-2 sm:mx-2 lg:mx-2">
             {photocardCollection.length > 0 ? (
               photocardCollection.map((card) => {
                 const cost = card.photocard_id.cost?.$numberDecimal || card.photocard_id.cost || 'N/A';
