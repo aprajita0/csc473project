@@ -14,6 +14,7 @@ const UserProfile = () => {
   const [addressTwo, setAddressTwo] = useState('New User - Enter your address line 2');
   const [currentProfile, setCurrentProfile] = useState({});
   const [isEditable, setIsEditable] = useState(false);
+  const [photocardCollection, setPhotocardCollection] = useState([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -55,7 +56,34 @@ const UserProfile = () => {
       }
     };
 
+    const fetchPhotocardCollection = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/Login');
+        return;
+      }
+      try {
+        const response = await fetch('/api/users/collection', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch collection');
+        }
+
+        const { collection } = await response.json();
+        setPhotocardCollection(collection); 
+      } catch (error) {
+        console.error('Error fetching:', error);
+      }
+    };
+
     fetchUserProfile();
+    fetchPhotocardCollection();
   }, [navigate]);
 
   const handleLogout = () => {
@@ -148,17 +176,43 @@ const UserProfile = () => {
               {isEditable ? (
                 <textarea className="address-input" id="address1" placeholder="Enter your address line one..." value={addressOne} onChange={(e) => setAddressOne(e.target.value)} maxLength="100"/>
               ) : (
-                <div className="address-input"> {addressOne}</div>
+                <div className="email"> {addressOne}</div>
               )}
             </div>
             <div className="info-container">
               {isEditable ? (
                 <textarea className="address-input" id="address2" placeholder="Enter your address line two..." value={addressTwo} onChange={(e) => setAddressTwo(e.target.value)} maxLength="100"/>
               ) : (
-                <div className="address-input"> {addressTwo}</div>
+                <div className="email"> {addressTwo}</div>
               )}
             </div>
           </div>
+        </section>
+        <section className="photo-card-section mt-10">
+          <h2 className="text-xl font-bold text-center mb-4">My Photocard Collection</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 px-4">
+            {photocardCollection.length > 0 ? (
+              photocardCollection.map((card) => {
+                const cost = card.photocard_id.cost?.$numberDecimal || card.photocard_id.cost || 'N/A';
+                const postingDate = card.photocard_id.posting_date? new Date(card.photocard_id.posting_date).toLocaleDateString(): 'N/A';
+                
+                return (
+                <div key={card._id} className="border p-4 rounded shadow-lg bg-white">
+                  <img
+                  src={card.photocard_id.image || ''}
+                  className="w-full h-60 object-cover rounded"
+                  />
+                  <h3 className="text-lg font-semibold mt-2 text-center">{card.photocard_id.artist_name || 'N/A'}</h3>
+                  <p className="text-sm text-gray-600 text-center font-semibold">{card.photocard_id.details || 'N/A'}</p>
+                  <p className="text-sm text-gray-600 text-center font-semibold">Cost: ${cost}</p>
+                  <p className="text-sm text-gray-500 text-center font-semibold"> Posted on: {postingDate}</p>
+                </div>
+               );
+            })
+          ) : (
+          <div className="text-center text-gray-500">No photo cards found.</div>
+          )}
+        </div>
         </section>
       </main>
       <div className="add-container">
@@ -170,3 +224,4 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
