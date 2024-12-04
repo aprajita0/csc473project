@@ -11,15 +11,6 @@
     margin-bottom: 40px;
 }
 
-.welcome-message {
-    max-width: 600px;
-}
-
-.welcome-message  h1 {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
 .info-container {
     max-width: 600px;
 }
@@ -96,29 +87,6 @@
     z-index: 2;
 }
 
-
-.add-button {
-    width: 70px; 
-    height: 70px;
-    background-color: #ddd;
-    color: #000;
-    border-radius: 50%; 
-    font-size: 35px; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 60px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-.add-button:hover {
-    background-color: #000000;
-    color: #ffffff;
-  }
-
-
 .logout-container {
     display: flex;
     justify-content: flex-end; 
@@ -129,21 +97,6 @@
     z-index: 3;
 }
 
-
-.logout-button {
-    width: 100px; 
-    height: 40px;
-    background-color: #ddd;
-    color: #000;
-    border-radius: 30px;
-    font-size: 16px; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s, color 0.2s;
-  }
   
 .logout-button:hover {
     background-color: #000000;
@@ -161,10 +114,6 @@
         flex-direction: column;
     }
 
-    .welcome-message{
-        max-width: 100%; 
-    }
-
     .info-container {
         max-width: 100%; 
     }
@@ -177,20 +126,6 @@
         min-width: 100%; 
     }
 
-    .add-button{
-        width: 60px; 
-        height: 60px;
-    }
-
-    .logout-button {
-        width: 90px; 
-        height: 30px;
-    }
-
-    .welcome-message h1 {
-        font-size: 24px;
-    }
-
     .container {
         margin-left: 5px;
         margin-right: 5px; 
@@ -199,15 +134,13 @@
     .fullName{
         font-size: 16px; 
     }
-    .emai{
-        font-size: 16px; 
-    }
-    .label{
+    .email{
         font-size: 16px; 
     }
     .address-input {
         font-size: 16px; 
     }
 }
+
 
 
