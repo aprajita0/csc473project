@@ -28,32 +28,40 @@ const authMiddleware = (req, res, next) => {
 
 router.post('/send-message', authMiddleware, async (req, res) => {
     try {
-        const { to_message, message } = req.body;
+        const { to_username, message } = req.body; 
 
-       
-        if (!to_message || !message) {
-            return res.status(400).json({ error: 'Missing required fields: to_message or message.' });
+        if (!to_username || !message) {
+            return res.status(400).json({ error: 'Missing required fields: to_username or message.' });
         }
 
-        const recipientUser = await User.findById(to_message);
+        const recipientUser = await User.findOne({ username: to_username });
         if (!recipientUser) {
             return res.status(404).json({ error: 'Recipient user does not exist.' });
         }
 
-      
+        
         const senderUser = await User.findById(req.user.id);
         if (!senderUser) {
             return res.status(404).json({ error: 'Sender user does not exist.' });
         }
 
         const newMessage = new Message({
-            to_message,
+            to_message: recipientUser._id,
             from_message: req.user.id,
-            message,
+            message
         });
 
         await newMessage.save();
-        res.status(200).json({ message: 'Message sent successfully.' });
+
+        
+        res.status(200).json({
+            message: 'Message sent successfully.',
+            data: {
+                to_message: { id: recipientUser._id, username: recipientUser.username },
+                from_message: { id: senderUser._id, username: senderUser.username },
+                message: newMessage.message
+            }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error sending message.', details: error.message });
