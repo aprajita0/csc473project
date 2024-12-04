@@ -143,16 +143,16 @@ const UserProfile = () => {
     <div className="LandingPage mt-28 flex flex-col flex-grow justify-between min-h-screen">
       <Navbar />
       <div className="logout-container">
-        <button className="logout-button" onClick={handleEdit}>
+        <button className="edit-button learn-more drop-shadow-md text-gray-700 font-bold text-sm border-2 border-gray-700 rounded-full px-6 py-2 hover:scale-105 ease-in-out duration-300 hover:underline" onClick={handleEdit}>
           {isEditable ? 'Save' : 'Edit Profile'}
         </button>
-        <button className="logout-button" onClick={handleLogout}>Log Out</button>
+        <button className="logout-button drop-shadow-md bg-gray-700 text-white font-bold text-sm border-2 border-gray-700 rounded-full px-6 py-2 hover:scale-105 ease-in-out duration-300 hover:underline" onClick={handleLogout}>Log Out</button>
       </div>
       <main className="container">
         <section className="top-container">
           <div className="welcome-message">
-            <h1>Welcome Back {username}</h1>
-            <div className="info-container">
+          <h1 className="text-4xl font-bold text-[#41403e]"> Welcome Back, {username}!</h1>
+            <div className="text-4xl font-bold text-[#41403e] mt-5">
               {isEditable ? (
                 <input type="text"className="enter-name" id="fullname" placeholder="Enter your full name..." value={fullname} onChange={(e) => setFullName(e.target.value)} maxLength="75"/>
               ) : (
@@ -166,9 +166,7 @@ const UserProfile = () => {
                 <div className="display-size"> {myBio}</div>
               )}
             </div>
-            <div className="info-container">
-              <div className="label"> Personal Information:</div>
-            </div>
+            <div className="text-lg font-bold text-[#41403e] mt-10"> Personal Information:</div>
             <div className="info-container">
               <div className="email">{email}</div>
             </div>
@@ -188,6 +186,7 @@ const UserProfile = () => {
             </div>
           </div>
         </section>
+        <div class="w-full border-t-2 border-gray-300 my-4"></div>
         <section className="photo-card-section mt-10">
           <h2 className="text-xl font-bold text-center mb-4">My Photocard Collection</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-16 mx-2 sm:mx-2 lg:mx-2">
@@ -216,7 +215,7 @@ const UserProfile = () => {
         </section>
       </main>
       <div className="add-container">
-        <button className="add-button" onClick={() => navigate('/Add_Card')}>+</button>
+        <button className="add-button mt-5 mb-5 drop-shadow-md text-gray-700 font-bold text-3xl border-2 border-gray-700 rounded-full px-7 py-5 hover:scale-105 ease-in-out duration-300 hover:bg-gray-700 hover:text-white font-bold" onClick={() => navigate('/Add_Card')}>+</button>
       </div>
       <Footer />
     </div>
