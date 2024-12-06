@@ -7,6 +7,7 @@ import Catalog from './routes/Catalog';
 import TradingHub from './routes/TradingHub';
 import Messages from './routes/Messages';
 import Compose from './components/ComposeMessage';
+import Team from './routes/Team';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/Add_Card" element={<Add_Card />} />
           <Route path="/Compose" element={<Compose/>} />
           <Route path="/messages" element={<Messages />} /> 
+          <Route path="/Team" element={<Team />} /> 
           {/* <Route path="/trading-hub" element={<TradingHub />} />
           <Route path="/catalog" element={<Catalog />} />*/}
         </Routes>
