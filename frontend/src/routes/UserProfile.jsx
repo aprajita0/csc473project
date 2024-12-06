@@ -184,7 +184,7 @@ const UserProfile = () => {
     <div className="flex flex-col items-start ml-16">
       <div>
         {isEditable ? (
-          <textarea className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400" id="bio" placeholder="Enter your bio here..." value={myBio} onChange={(e) => setMyBio(e.target.value)} maxLength="250"/>
+          <textarea className="w-[1000] border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400" id="bio" placeholder="Enter your bio here..." value={myBio} onChange={(e) => setMyBio(e.target.value)} maxLength="250"/>
         ) : (
         <p className="text-base text-gray-700">{myBio}</p>
         )}
