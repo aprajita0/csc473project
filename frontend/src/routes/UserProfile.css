@@ -8,16 +8,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
-}
-
-.info-container {
-    max-width: 600px;
-}
-
-.fullName {
-    font-size: 22px;
-    margin-bottom: 10px;
 }
 
 .enter-name {
@@ -83,7 +73,6 @@
     display: flex;
     justify-content: flex-end; 
     width: 100%; 
-    padding-right: 80px;
     z-index: 2;
 }
 
@@ -114,9 +103,6 @@
         flex-direction: column;
     }
 
-    .info-container {
-        max-width: 100%; 
-    }
 
     .bio-input{
         min-width: 100%; 
@@ -131,9 +117,6 @@
         margin-right: 5px; 
     }
 
-    .fullName{
-        font-size: 16px; 
-    }
     .email{
         font-size: 16px; 
     }
@@ -141,6 +124,3 @@
         font-size: 16px; 
     }
 }
-
-
-
