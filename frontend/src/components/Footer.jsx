@@ -27,7 +27,7 @@ const Footer = () => {
         <div>
           <p className='font-bold'>About Us</p>
           <div className='text-sm flex flex-col'>
-            <Link className='hover:underline' to='/'>Meet the Team</Link>
+            <Link className='hover:underline' to='/team'>Meet the Team</Link>
             <Link className='hover:underline' to='/trading-hub'>Instagram</Link>
             <Link className='hover:underline' to='/catalog'>Twitter/X</Link>
           </div>
