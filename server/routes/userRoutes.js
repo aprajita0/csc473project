@@ -316,7 +316,7 @@ router.delete('/delete-collection', authMiddleware, async (req, res) => {
     }
 });
 
-router.post('/search-photocard', async (req, res) => {
+router.post('/search-photocard-artist-name', async (req, res) => {
     try {
         const { artist_name } = req.body;
         if (!artist_name) {
@@ -332,6 +332,26 @@ router.post('/search-photocard', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error searching photocard', details: error.message });
+    }
+});
+
+
+router.get('/get-collection-names', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const collections = await Collection.find({ owner_id: user._id }).distinct('collection_name');
+        if (!collections || collections.length === 0) {
+            return res.status(404).json({ error: 'No collections found for the user.' });
+        }
+
+        res.status(200).json({ collections });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching collection names', details: error.message });
     }
 });
 
