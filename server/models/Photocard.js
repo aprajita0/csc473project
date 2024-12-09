@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const PhotocardSchema = new mongoose.Schema({
+    owner_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     artist_name: { type: String, required: true},
     title: { type: String, maxlength: 100 },
     image: {type: String, required: true},

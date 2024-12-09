@@ -135,7 +135,6 @@ router.post('/editProfile', authMiddleware, async (req, res) => {
     }
 });
 
-
 router.get('/photocards', async (req, res) => {
     try {
         // Retrieve all photocards from the database
@@ -152,6 +151,12 @@ router.get('/photocards', async (req, res) => {
 router.post('/add-photocard-collection', authMiddleware, async (req, res) => {
     try {
         const { photocard_id } = req.body;
+        const photocard = await Photocard.findById(photocard_id);
+        
+        if (!photocard) {
+            return res.status(404).json({ error: 'Photocard not found.' });
+        }
+
         const user = await User.findById(req.user.id);
 
         if (!user) {
@@ -159,7 +164,7 @@ router.post('/add-photocard-collection', authMiddleware, async (req, res) => {
         }
 
         const collection = new Collection({
-            owner_id: user._id, 
+            owner_id: req.user.id, 
             photocard_id: photocard_id
         });
 
@@ -171,22 +176,146 @@ router.post('/add-photocard-collection', authMiddleware, async (req, res) => {
     }
 });
 
-router.get('/collection', authMiddleware, async (req, res) => {
+router.post('/add-photocard-collection-name', authMiddleware, async (req, res) => {
     try {
+        const { photocard_id, collection_name } = req.body;
+
+        const photocard = await Photocard.findById(photocard_id);
+        if (!photocard) {
+            return res.status(404).json({ error: 'Photocard not found.' });
+        }
         const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
         }
 
-        const collection = await Collection.find({ owner_id: user._id })
+        if (!collection_name) {
+            return res.status(400).json({ error: 'Collection name is required.' });
+        }
+
+        
+
+        const collection = new Collection({
+            owner_id: req.user.id,
+            photocard_id: photocard_id,
+            collection_name
+        });
+
+        await collection.save();
+        res.status(201).json({ message: 'Photocard added to collection successfully.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error adding photocard to collection', details: error.message });
+    }
+});
+
+
+router.post('/get-collection-by-name', authMiddleware, async (req, res) => {
+    try {
+        const { collection_name } = req.body;
+        if (!collection_name) {
+            return res.status(400).json({ error: 'Collection name is required.' });
+        }
+
+
+
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const collection = await Collection.find({ owner_id: user._id, collection_name })
             .populate('photocard_id');
+            
+        if (!collection || collection.length === 0) {
+            return res.status(404).json({ error: 'Collection not found for the user.' });
+        }
 
         res.status(200).json({ collection });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error fetching collection', details: error.message });
     }
-});    
+});
+
+router.get('/get-my-collection', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const collection = await Collection.find({ owner_id: user._id, collection_name: 'My Collection' })
+            .populate('photocard_id');  // Populate photocard details
+
+        if (!collection || collection.length === 0) {
+            return res.status(404).json({ error: 'No photocards found in My Collection.' });
+        }
+
+        res.status(200).json({ collection });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching collection', details: error.message });
+    }
+});
+
+router.delete('/delete-photocard-from-collection', authMiddleware, async (req, res) => {
+    try {
+        const { photocard_id, collection_name } = req.body;
+        
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        
+        const collection = await Collection.findOne({
+            owner_id: req.user.id, 
+            collection_name, 
+            photocard_id
+        });
+
+        if (!collection) {
+            return res.status(404).json({ error: 'Photocard not found in the collection.' });
+        }
+
+        
+        await Collection.findOneAndDelete({
+            owner_id: req.user.id, 
+            collection_name, 
+            photocard_id
+        });
+
+        res.status(200).json({ message: 'Photocard removed from collection successfully.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error removing photocard from collection', details: error.message });
+    }
+});
+
+
+router.delete('/delete-collection', authMiddleware, async (req, res) => {
+    try {
+        const { collection_name } = req.body;
+
+        // Find user by ID
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const collections = await Collection.deleteMany({ owner_id: user._id, collection_name });
+        if (collections.deletedCount === 0) {
+            return res.status(404).json({ error: 'Collection not found.' });
+        }
+
+        res.status(200).json({ message: 'Collection removed successfully.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error removing collection', details: error.message });
+    }
+});
+
 
 
 

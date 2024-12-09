@@ -1,10 +1,15 @@
 const express = require('express');
 const multer = require('multer');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const User = require('../models/Users'); 
 const router = express.Router();
 const AWS = require('aws-sdk');
 const upload = multer({ storage: multer.memoryStorage() });
 const Photocard = require('../models/Photocard');
 const Artist = require('../models/Artist'); 
+const JWT_SECRET = process.env.JWT_SECRET;
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -14,7 +19,23 @@ AWS.config.update({
   
   const s3 = new AWS.S3();
 
-// Upload to S3
+const authMiddleware = (req, res, next) => {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+
+    if (!token) {
+        return res.status(401).json({ error: 'Access denied. No token provided.' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.user = decoded; 
+        next();
+    } catch (error) {
+        res.status(400).json({ error: 'Invalid token.' });
+    }
+};
+
+  // Upload to S3
 router.post('/upload', upload.single('image'), async (req, res) => {
     try {
       
@@ -39,8 +60,12 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   });
 
 
-  router.post('/add-photocard', upload.single('image'), async (req, res) => {
+  router.post('/add-photocard', upload.single('image'), authMiddleware, async (req, res) => {
     try {
+      const user = await User.findById(req.user.id);
+      if (!user) {
+          return res.status(404).json({ error: 'User not found.' });
+      }
       const { artist_name, title, details, cost } = req.body;
       
   
@@ -55,6 +80,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   
       
       const photocard = new Photocard({
+        owner_id: req.user.id,
         artist_name,  
         title,
         image: s3Data.Location,  // S3 URL for the image
