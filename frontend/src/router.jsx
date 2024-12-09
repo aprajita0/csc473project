@@ -8,6 +8,8 @@ import Login from './routes/Login.jsx'
 import Register from './routes/Register.jsx'
 import UserTradePost from "./routes/UserTradePost.jsx"
 import Add_Card from "./routes/Add_Card.jsx"
+import Compose from "./components/ComposeMessage.jsx"
+import Team from "./routes/Team.jsx"
 
 export const router = createBrowserRouter([
     // NavBar
@@ -19,6 +21,8 @@ export const router = createBrowserRouter([
     { path:'/Login', element:<Login/> },
     { path:'/Register', element:<Register/> },
     { path:'/Add_Card', element:<Add_Card/> },
+    { path:'/Compose', element:<Compose/> },
+    { path:'/Team', element:<Team/> },
 
     { path:'/tradepost', element:<UserTradePost /> },
 
