@@ -316,6 +316,24 @@ router.delete('/delete-collection', authMiddleware, async (req, res) => {
     }
 });
 
+router.post('/search-photocard', async (req, res) => {
+    try {
+        const { artist_name } = req.body;
+        if (!artist_name) {
+            return res.status(400).json({ error: 'Artist name is required.' });
+        }
+
+        const photocards = await Photocard.find({ artist_name });
+        if (!photocards || photocards.length === 0) {
+            return res.status(404).json({ error: 'Photocard not found.' });
+        }
+
+        res.status(200).json({ photocards });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error searching photocard', details: error.message });
+    }
+});
 
 
 
