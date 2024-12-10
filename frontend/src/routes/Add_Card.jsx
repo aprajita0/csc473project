@@ -15,16 +15,17 @@ const Add_Card = () => {
   const [groupQuery, setGroupQuery] = useState('');
   const SHEET_ID = "1mtv8zZ6zQDMW-tgOdoeAb9zVpDl2W4ck_utueOpTH1E"; 
   const API_KEY = "AIzaSyDHZr7ul0XqU07rv_12n4c9celWBy8SNO0";
+  const user = localStorage.getItem('user_id');
+  const [userCollections, setUserCollections] = useState([]); 
+  const [selectedCollection, setSelectedCollection] = useState('My Collection');
 
   const [formData, setFormData] = useState({
     artist_name: '',
     title: '',
-    details: '',
     cost: '',
-    artistGroup: '',
-    collectionName: '',
-    year_released: '',
+    details: '',
     image: null,
+    collectionName: 'My Collection',
   });
 
   useEffect(() => {
@@ -51,17 +52,46 @@ const Add_Card = () => {
       }
     };
 
+    const fetchUserCollections = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch('/api/users/get-collection-names', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok && data.collections) {
+          setUserCollections(data.collections.filter((name) => name !== 'My Collection'));
+        }
+      } catch (err) {
+        console.error('Error getting users collections:', err);
+      }
+    };
+
+    fetchUserCollections();
     fetchIdolInfo();
   }, [SHEET_ID, API_KEY]);
+
+
+  const handleCollectionPick = (e) => {
+    const value = e.target.value || 'My Collection'; 
+    setSelectedCollection(value);
+    setFormData((prevData) => ({ ...prevData, collectionName: value }));
+  };
 
   const handleSearchIdols = (e) => {
     const value = e.target.value;
     setIdolQuery(value);
 
+    setFormData((prevData) => ({
+      ...prevData,
+      artist_name: value.trim(),
+    }));
     if (value.trim()) {
-      const filtered = idolNames.filter((name) =>
-        name?.toLowerCase().includes(value.toLowerCase())
-      );
+      const filtered = idolNames.filter((name) => name?.toLowerCase().includes(value.toLowerCase()));
       setIdolLookUp(filtered.slice(0, 15)); 
     } else {
       setIdolLookUp([]);
@@ -94,6 +124,20 @@ const Add_Card = () => {
     setGroupLookUp([]);
   };
 
+  const handleEnterIdols = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      setIdolLookUp([]);
+    }
+  };
+  
+  const handleEnterGroups = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setGroupLookUp([]); 
+    }
+  };
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -112,13 +156,24 @@ const Add_Card = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setFormData((prevData) => ({
+      ...prevData,
+      artist_name: idolQuery.trim(), 
+    }));
+
+    if (!idolQuery.trim() || !formData.title || !formData.details || !formData.cost || !formData.image) {
+      alert('All fields are required.');
+      return;
+    }
+
+    
     const form = new FormData();
-      form.append('artist_name', formData.artist_name);
+      form.append('artist_name',  idolQuery.trim());
       form.append('title', formData.title);
       form.append('details', formData.details);
       form.append('cost', formData.cost);
       form.append('artistGroup', formData.artistGroup);
-      form.append('collectionName', formData.collectionName);
+      form.append('collectionName', selectedCollection); 
       form.append('year_released', formData.year_released);
       form.append('image', formData.image);
 
@@ -134,13 +189,36 @@ const Add_Card = () => {
 
       const result = await response.json();
       if (result.success) {
+        const photocardId = result.photocard._id;
+        const addCollectionResponse = await fetch('/api/users/add-photocard-collection-name', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+              photocard_id: photocardId,
+              collection_name: formData.collectionName?.trim() || 'My Collection',
+          }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server Response:', errorText);
+        alert('Server error, please try again later');
+      }
+      
+      const collectionResult = await addCollectionResponse.json();
+        if (!addCollectionResponse.ok || !collectionResult.message) {
+            alert('Failed to add photocard to the collection');
+        }
+        alert('Photocard added successfully!');
         navigate('/Profile');
-        alert('Photocard added!');
+
       } else {
         alert('Failed to add your photocard');
       }
     } catch (error) {
-      console.error('Error:', error);
       alert('System Error');
     }
   };
@@ -156,8 +234,12 @@ const Add_Card = () => {
           <div className="page-message">
             <h1>Add a PhotoCard</h1>
             <div className="label-container">
+              <label className="field-label" htmlFor="collectionName">Photocard Title:</label>
+              <input className="field-input" type="text" id="title" value={formData.title} onChange={handleChange} placeholder="Enter the photocard title" required/>
+            </div>
+            <div className="label-container">
               <label className="field-label" htmlFor="artist_name">Idol Name:</label>
-              <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Search idol name"required/>
+              <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Search idol name"  onKeyDown={handleEnterIdols}required/>
               {idolLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {idolLookUp.map((name, index) => (
@@ -174,7 +256,7 @@ const Add_Card = () => {
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="artistGroup">Group Lookup:</label>
-              <input className="field-input" type="text" id="artistGroup" value={groupQuery}  placeholder="Search for a group name" onChange={handleGroupSearch}/>
+              <input className="field-input" type="text" id="artistGroup" value={groupQuery}  placeholder="Search for a group name" onChange={handleGroupSearch}  onKeyDown={handleEnterGroups}/>
               {groupLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {groupLookUp.map((group, index) => (
@@ -195,7 +277,14 @@ const Add_Card = () => {
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="collectionName">Collection Name:</label>
-              <input className="field-input" type="text" id="collectionName" value={formData.collectionName} onChange={handleChange} placeholder="Enter the collection name" />
+              <select id="collectionName" className="field-input" value={selectedCollection} onChange={handleCollectionPick}>
+                <option value="My Collection">Select a Collection (Optional)</option>
+                {userCollections.map((collection, index) => (
+                  <option key={index} value={collection}>
+                    {collection}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="year_released">Year Released:</label>
@@ -212,4 +301,3 @@ const Add_Card = () => {
 };
 
 export default Add_Card;
-
