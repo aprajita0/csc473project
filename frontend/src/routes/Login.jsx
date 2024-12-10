@@ -28,6 +28,7 @@ const Login = () => {
         console.log('Login successful:', data);
 
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user_id', data.userid);
         localStorage.setItem('isLoggedIn', 'true')
         navigate('/profile'); 
       } else {
