@@ -39,7 +39,7 @@ const Add_Card = () => {
           const nameIndex = headers.indexOf("Full Name"); 
           const formerGroupIndex = headers.indexOf("Former Group"); 
           const otherGroupIndex = headers.indexOf("Other Group");
-          const names = data.values.slice(1).map((row) => row[nameIndex]);
+          const names = headers.indexOf("Stage Name");
           const groups = data.values.slice(1).flatMap((row) => [
             row[formerGroupIndex],
             row[otherGroupIndex],
