@@ -239,7 +239,7 @@ const Add_Card = () => {
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="artist_name">Idol Name:</label>
-              <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Enter a idol name"  onKeyDown={handleEnterIdols}required/>
+              <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Enter an idol name"  onKeyDown={handleEnterIdols}required/>
               {idolLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {idolLookUp.map((name, index) => (
