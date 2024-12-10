@@ -18,8 +18,9 @@ app.get('/', (req, res) => {
     res.send('Hello World');
   })
   
-app.listen(8000, () => {
-    console.log('Server is running on port 8000');
+const _port = 5000;
+app.listen(_port, () => {
+    console.log(`Server is running on port ${_port}`);
   })
 
 mongoose.connect(uri)
