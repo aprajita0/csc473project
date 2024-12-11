@@ -41,6 +41,7 @@ const TradingHub = () => {
                 <UserTradePostCard 
                   key={photocard._id} 
                   id={photocard._id} 
+                  owner={photocard.owner_id} 
                   artist_name={photocard.artist_name} 
                   group={photocard.group} 
                   image={photocard.image} 

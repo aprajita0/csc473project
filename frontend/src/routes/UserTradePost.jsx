@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -34,7 +34,7 @@ const UserTradePost = () => {
     <div className="UserTradePost">
       <Navbar />
       <div className="TradePost mt-28 flex grow flex-col min-h-screen">
-        <UserTradePostInfo {...product} />
+        <UserTradePostInfo {...product} owner={product.owner_id} />
         <hr className="h-px my-2 bg-gray-200 border-1 dark:bg-gray-200"></hr>
         <div id='comment-section' className="flex flex-col items-center pb-4">
           <p className="text-xl font-bold py-2">Comments</p>

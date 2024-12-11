@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
-const UserTradePostCard = ({ id, artist_name, group, image, cost, title, details, type, posting_date }) => {
+const UserTradePostCard = ({ id, owner, artist_name, group, image, cost, title, details, type, posting_date }) => {
+  
   const costNumber = parseFloat(cost.$numberDecimal);
   
   const displayType = type ? type.toUpperCase() : `${typeof type}`;  // for debugging 'undefined' values
@@ -16,13 +17,9 @@ const UserTradePostCard = ({ id, artist_name, group, image, cost, title, details
       </p>
 
       <div id='trade-post-card-header' className='flex flex-col justify-center'>
-        <div id='trader-info' className='flex justify-center'>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
-            <path fillRule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A6.483 6.483 0 0 0 10 16.5a6.483 6.483 0 0 0 4.793-2.11A5.99 5.99 0 0 0 10 12Z" clipRule="evenodd" />
-          </svg>
-          <span id='trade-post-username' className='text-xs pt-0.5'>
-            userName
-          </span>
+        <div id='trader-info' className='flex justify-center items-center'>
+          {owner?.profile_pic && <img src={owner.profile_pic} alt={`${owner.username}'s profile`} className="w-6 h-6 rounded-full mr-2" />}
+          <span id='trade-post-username' className='text-xs pt-0.5'>{owner?.username || 'Unknown'}</span>
         </div>
         <span className='BuySell text-xl font-extrabold'>
           {displayType} - ${costNumber.toFixed(2)}
@@ -31,7 +28,8 @@ const UserTradePostCard = ({ id, artist_name, group, image, cost, title, details
 
       <Link to={`/tradepost/${id}`} className='flex justify-center drop-shadow-md'>
         <img className='TradePostImage max-h-72 rounded-lg drop-shadow-md' 
-        src={image} alt={`${artist_name} photocard`} 
+        src={image} 
+        alt={`${artist_name} photocard`} 
         />
       </Link>
 

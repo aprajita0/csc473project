@@ -1,7 +1,5 @@
-import React from 'react';
 
-const UserTradePostInfo = ({ artist_name, group, image, cost, title, details, type, posting_date }) => {
-
+const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, details, type, posting_date }) => {
   const costNumber = cost && cost.$numberDecimal ? parseFloat(cost.$numberDecimal) : 0;
 
   return (
@@ -21,16 +19,20 @@ const UserTradePostInfo = ({ artist_name, group, image, cost, title, details, ty
           <p id='buy-or-sell' className="text-xl font-black underline">
             {type ? type.toUpperCase() : 'N/A'}
           </p>
+
           <div id="poster-info" className="text-sm space-x-1 flex items-center">
             <div id="poster-pfp" className="flex justify-center items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-              </svg>
+              <img
+                src={owner?.profile_pic}
+                alt={`${owner?.username}'s profile`}
+                className="w-6 h-6 rounded-full mr-2"
+              />
             </div>
             <div id="poster-username" className="text-xs flex items-center">
-              traderUsername
+              {owner?.username || 'Unknown'}
             </div>
           </div>
+
           <p id='photocard-title' className="">
             {group} - {artist_name} (album/collection)
           </p>
@@ -58,6 +60,7 @@ const UserTradePostInfo = ({ artist_name, group, image, cost, title, details, ty
               Message tradePoster!
             </button>
           </div>
+
           <div id='bookmark-post'>
             <button className="drop-shadow-md text-sm border rounded px-12 py-2 bg-[#434343] text-white font-bold
                                 hover:brightness-90 hover:scale-105 ease-in-out duration-300">
