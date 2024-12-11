@@ -1,23 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Sidebar = () => {
   const [buyingOrSelling, setBuyingOrSelling] = useState(null);
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
   const [group, setGroup] = useState('');
   const [gender, setGender] = useState({ Male: false, Female: false });
-  const [yearRange, setYearRange] = useState({ min: '', max: '' });
   const [country, setCountry] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [groups, setGroups] = useState([]);
+  const [countries, setCountries] = useState([]);
 
-  const groups = ['BTS', 'NewJeans'];
-  const countries = ['South Korea', 'Japan', 'China', 'Thailand', 'Vietnam', 'Philippines', 'Australia', 'United States', 'United Kingdom'];
+  useEffect(() => {
+    const fetchFilters = async () => {
+      const groupData = await Promise.resolve(['BTS', 'NewJeans', 'BlackPink', 'Stray Kids']);
+      const countryData = await Promise.resolve([
+        'South Korea', 'Japan', 'China', 'Thailand', 'Vietnam',
+        'Philippines', 'Australia', 'United States', 'United Kingdom',
+      ]);
+
+      setGroups(groupData);
+      setCountries(countryData);
+    };
+
+    fetchFilters();
+  }, []);
 
   return (
-    <aside className="TradingHub-Sidebar bg-neutral-100 h-screen sticky top-28 border rounded-md p-4 drop-shadow-lg">
+    <aside className="TradingHub-Sidebar bg-neutral-100 h-screen w-96 sticky top-28 border rounded-md p-4 drop-shadow-lg">
       {/* search field */}
       <input
         className="border rounded-md p-2 w-full mb-4"
         type="search"
         placeholder="Search"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
       />
 
       {/* buy or sell filter */}
@@ -57,6 +73,7 @@ const Sidebar = () => {
           </select>
           {group && <div className="mt-2">Selected Group: {group}</div>}
         </div>
+
         {/* gender filter */}
         <div className="mb-4 w-1/2">
           <div className="font-bold mb-2">Gender</div>

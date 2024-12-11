@@ -49,8 +49,8 @@ const Navbar = () => {
         <Link className='hover:underline' to='/trading-hub'>Trade Hub</Link>
         <div className='text-slate-400'>|</div>
 
-        <Link className='hover:underline' to='/catalog'>Catalog</Link>
-        <div className='text-slate-400'>|</div>
+        {/* <Link className='hover:underline' to='/catalog'>Catalog</Link>
+        <div className='text-slate-400'>|</div> */}
 
         <button onClick={handleMessageClick} className='hover:underline'>
           Messages
