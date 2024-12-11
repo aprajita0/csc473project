@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserCircleIcon} from '@heroicons/react/24/solid';
 import { GiftIcon} from '@heroicons/react/24/solid';
 import { Bars4Icon} from '@heroicons/react/24/solid';
+import { CheckIcon} from '@heroicons/react/24/solid';
 import './UserProfile.css';
 
 const UserProfile = () => {
@@ -18,7 +19,10 @@ const UserProfile = () => {
   const [currentProfile, setCurrentProfile] = useState({});
   const [isEditable, setIsEditable] = useState(false);
   const [isEditingCollection, setIsEditingCollection] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
   const [photocardCollection, setPhotocardCollection] = useState([]);
+  const [userCollections, setUserCollections] = useState([]);
+  const [selectedCollection, setSelectedCollection] = useState('My Collection');
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -67,7 +71,7 @@ const UserProfile = () => {
         return;
       }
       try {
-        const response = await fetch('/api/users/collection', {
+        const response = await fetch('/api/users/get-my-collection', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -86,6 +90,34 @@ const UserProfile = () => {
       }
     };
 
+    const fetchUserCollections = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('/api/users/get-collection-names', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+    
+        if (response.ok) {
+          const data = await response.json();
+          let collections = data.collections || [];
+          if (!collections.includes('My Collection')) {
+            collections.unshift('My Collection');
+          }
+          setUserCollections(data.collections || []); 
+        } else {
+          console.error('Failed to fetch collection names');
+          setUserCollections([]); 
+        }
+      } catch (err) {
+        console.error('Error fetching collections:', err);
+        setUserCollections([]); 
+      }
+    };
+    fetchUserCollections();
     fetchUserProfile();
     fetchPhotocardCollection();
   }, [navigate]);
@@ -93,6 +125,7 @@ const UserProfile = () => {
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
     navigate('/Login');
   };
 
@@ -100,8 +133,170 @@ const UserProfile = () => {
     setIsEditingCollection(!isEditingCollection);
   }
 
-  const handleRemoveCard = (cardId) => {
-};
+  const handleSelectCard = async () => {
+    setIsSelectCard(!isSelectCard);
+  }
+
+  const handleRemoveCard = async (cardId, collectionName = 'My Collection') => {
+    if (!selectedCard) {
+      alert('Please select a photocard first');
+      return;
+    }
+  
+    if (collectionName === 'My Collection') {
+      alert('Photocards cannot be removed from your default collection');
+      return;
+    }
+  
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('You must be logged to do thus');
+        return;
+      }
+  
+      const response = await fetch('/api/users/delete-photocard-from-collection', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          photocard_id: selectedCard,
+          collection_name: collectionName,
+        }),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        alert(result.message || 'Photocard removed');
+        setPhotocardCollection((prev) =>
+          prev.filter((card) => card.photocard_id._id !== selectedCard)
+        );
+        setSelectedCard(null); 
+      } else {
+        alert('Failed to remove photocard from collection.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('System Error, please try again later.');
+    }
+  };
+  
+  const handleAddCard = async (cardId) => {
+    if (!selectedCard) {
+      alert('Please select a photocard first.');
+      return;
+    }
+  
+    const collectionName = prompt('Enter the collection name to add this photocard to:');
+    if (!collectionName) {
+      alert('Collection name is required.');
+      return;
+    } 
+
+    if (!userCollections.includes(collectionName)) {
+      setUserCollections((prevCollections) => 
+        [...prevCollections, collectionName]);
+    }
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('You must be logged in first');
+        return;
+      }
+      let response = await fetch('/api/users/add-photocard-collection-name', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          photocard_id: cardId,
+          collection_name: collectionName,
+        }),
+      });
+  
+      if (!response.ok) {
+        const result = await response.json();
+        alert(result.error || 'Failed to add photocard to collection');
+        return;
+      }
+  
+      alert('Photocard added to your entered collection');
+  
+      response = await fetch('/api/users/delete-photocard-from-collection', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          photocard_id: cardId,
+          collection_name: selectedCollection,
+        }),
+      });
+  
+      if (!response.ok) {
+        const result = await response.json();
+        alert(result.error || 'Failed to remove photocard from original collection');
+        return;
+      }
+      setPhotocardCollection((prev) =>
+        prev.filter((card) => card.photocard_id._id !== cardId)
+      );
+      setSelectedCard(null);
+    } catch (error) {
+      alert('System error, please try again later.');
+    }
+  };
+  
+  const handleRemoveCollection = async () => {
+    const collectionName = prompt('Enter the name of the collection you would like to delete');
+    if (!collectionName) {
+      alert('Collection name is required');
+      return;
+    } 
+
+    if (collectionName == 'My Collection') {
+      alert('Default collection cannot be removed');
+      return;
+    } 
+    if (userCollections.includes(collectionName)) {
+      setUserCollections((prevCollections) => 
+        prevCollections.filter((name) => name !== collectionName));
+    }    
+
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('You must be logged in first');
+        return;
+      }
+      const response = await fetch('/api/users/delete-collection', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ collection_name: collectionName }),
+      });
+  
+      if (!response.ok) {
+        const result = await response.json();
+        alert(result.error || 'Failed to delete collection');
+        return;
+      }
+      setUserCollections((prevCollections) =>
+        prevCollections.filter((name) => name !== collectionName)
+    );
+  
+      alert('Collection deleted');
+    } catch (error) {
+      alert('System error, please try again later.');
+    }
+  };
 
   const handleEdit = async () => {
     if (isEditable) {
@@ -149,7 +344,39 @@ const UserProfile = () => {
 
     setIsEditable(!isEditable);
   };
+
+  const handleCollectionPick = async (collectionName) => {
+    if (!collectionName) {
+      setSelectedCollection('My Collection');
+      await fetchPhotocardCollection(); 
+      return;
+    }
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please log in');
+
+      }
+      const response = await fetch('/api/users/get-collection-by-name', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ collection_name: collectionName }),
+      });
   
+      if (!response.ok) {
+        console.log('Failed to fetch users collection');
+      }
+      const { collection } = await response.json();
+      setPhotocardCollection(collection || []); 
+      setSelectedCollection(collectionName);
+    } catch (error) {
+      alert('System error, please try again later.');
+    }
+  };  
+
 
   return (
     <div className="LandingPage mt-28 flex flex-col flex-grow justify-between min-h-screen">
@@ -184,7 +411,7 @@ const UserProfile = () => {
     <div className="flex flex-col items-start ml-16">
       <div>
         {isEditable ? (
-          <textarea className="w-[1000] border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400" id="bio" placeholder="Enter your bio here..." value={myBio} onChange={(e) => setMyBio(e.target.value)} maxLength="250"/>
+          <textarea className="w-[1000px] border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400" id="bio" placeholder="Enter your bio here..." value={myBio} onChange={(e) => setMyBio(e.target.value)} maxLength="250"/>
         ) : (
         <p className="text-base text-gray-700">{myBio}</p>
         )}
@@ -215,41 +442,69 @@ const UserProfile = () => {
       </div>
       </section>
       <section className="photo-card-section">
-        <div className="flex items-center justify-between w-full px-8 py-4 border border-gray-300 shadow-md rounded-lg">
+        <div className="flex items-center justify-between w-full px-6 py-4 border border-gray-300 shadow-md rounded-lg">
           <div className="flex items-center space-x-2">
-            <h2 className="text-2xl font-extrabold text-gray-600">My Photocard Collection</h2>
-            <GiftIcon className="h-8 w-8 text-gray-300" />
+            <h2 className="text-xl font-extrabold text-gray-600">My Photocard Collection</h2>
+            <GiftIcon className="h-6 w-6 text-gray-300" />
           </div>
           <div className="flex items-center space-x-2">
-            <button className="edit-collections border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-100 hover:border-gray-400 hover:scale-105 ease-in-out duration-300" onClick={handleEditCollection}>
-              {isEditingCollection ? 'Save' : 'Edit Collections'}
+            {isEditingCollection && (
+              <button 
+              className="edit-collections text-sm border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-100 hover:border-gray-400 hover:scale-105 ease-in-out duration-300" onClick={handleRemoveCollection}>
+              Delete Collection
+              </button>
+            )}
+             {isEditingCollection && (
+              <button 
+              className="edit-collections text-sm border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-100 hover:border-gray-400 hover:scale-105 ease-in-out duration-300"
+              onClick={() => handleRemoveCard(selectedCard, selectedCollection)}>
+              Delete Card from Collection
+            </button>
+            )}
+            {isEditingCollection && (
+              <button 
+              className="edit-collections text-sm border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-100 hover:border-gray-400 hover:scale-105 ease-in-out duration-300"
+              onClick={() => handleAddCard(selectedCard)}>
+              Add Card to Collection
+              </button>
+            )}
+            <button className="edit-collections text-sm border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-100 hover:border-gray-400 hover:scale-105 ease-in-out duration-300" onClick={handleEditCollection}>
+              {isEditingCollection ? 'Finish' : 'Edit Collections'}
             </button>
             <select
-            className="border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400 hover:border-gray-400">
-              <option value="">All Cards</option>
+            className="text-sm border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400 hover:border-gray-400"   onChange={(e) => handleCollectionPick(e.target.value)}>
+              {userCollections.map((collectionName, index) => (
+                <option key={index} value={collectionName}>
+                  {collectionName}
+                </option>
+              ))}
             </select>
           </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 mb-8 md:grid-cols-3 lg:grid-cols-4 gap-6 px-16 mx-2 sm:mx-2 lg:mx-2 mt-6">
-            {photocardCollection.length > 0 ? (
-              photocardCollection.map((card) => {
-                const cost = card.photocard_id.cost?.$numberDecimal || card.photocard_id.cost || 'N/A';
-                const postingDate = card.photocard_id.posting_date? new Date(card.photocard_id.posting_date).toLocaleDateString(): 'N/A';
-                return (
-                <div key={card._id} className="relative border p-4 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
-                  {isEditingCollection && (
-                    <button className="absolute top-2 right-2 bg-gray-300 text-white font-bold text-sm rounded-full px-2 py-1 hover:scale-105 ease-in-out duration-300 hover:bg-gray-700 hover:text-white font-bold" onClick={() => handleRemoveCard(card._id)}>✕</button>
-                  )}
-                  <img src={card.photocard_id.image || ''} className="w-full h-60 object-cover rounded-md" alt="Photocard"/>
-                  <h3 className="text-lg font-semibold mt-2 text-center text-gray-800">{card.photocard_id.artist_name || 'N/A'}</h3>
-                  <p className="text-sm text-gray-600 text-center font-medium">{card.photocard_id.details || 'N/A'}</p>
-                  <p className="text-sm text-gray-600 text-center font-medium">Cost: ${cost}</p>
-                  <p className="text-sm text-gray-500 text-center font-medium">Posted on: {postingDate}</p>
-                </div>
-                );
-              })
-            ) : (
-            <div className="text-center text-gray-500">No photo cards found.</div>
+          {photocardCollection.length > 0 ? (
+            photocardCollection.map((card) => {
+              const cost = card.photocard_id.cost?.$numberDecimal || card.photocard_id.cost || 'N/A';
+              const postingDate = card.photocard_id.posting_date? new Date(card.photocard_id.posting_date).toLocaleDateString(): 'N/A';
+              
+              return (
+              <div key={card._id} className="relative border p-4 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+                {isEditingCollection && (
+                  <button className={`absolute top-2 right-2 ${selectedCard === card.photocard_id._id ? 'bg-gray-700' : 'bg-gray-300'} text-white font-bold text-sm rounded-full px-2 py-1 hover:scale-105 ease-in-out duration-300`}  
+                  onClick={() => {setSelectedCard(selectedCard === card.photocard_id._id ? null : card.photocard_id._id);}}>
+                    <CheckIcon className="h-6 w-4" />
+                  </button>
+                )}
+                <img src={card.photocard_id.image || ''} className="w-full h-60 object-cover rounded-md" alt="Photocard"/>
+                <h3 className="text-lg font-semibold mt-2 text-center text-gray-800"> {card.photocard_id.artist_name || 'N/A'}</h3>
+                <p className="text-sm text-gray-600 text-center font-medium"> {card.photocard_id.details || 'N/A'}</p>
+                <p className="text-sm text-gray-600 text-center font-medium">Cost: ${cost}</p>
+                <p className="text-sm text-gray-500 text-center font-medium"> Posted on: {postingDate}</p>
+              </div>
+              );
+            })
+          ) : (
+          <div className="text-center text-gray-500">No photo cards found.</div>
           )}
         </div>
       </section>
@@ -260,4 +515,5 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
 
