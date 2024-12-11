@@ -66,7 +66,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       if (!user) {
           return res.status(404).json({ error: 'User not found.' });
       }
-      const { artist_name, title, details, cost } = req.body;
+      const { artist_name, group, title, details, cost, type} = req.body;
       
   
       // Upload image to S3
@@ -82,10 +82,12 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       const photocard = new Photocard({
         owner_id: req.user.id,
         artist_name,  
+        group,
         title,
         image: s3Data.Location,  // S3 URL for the image
         details,
         cost,
+        type,
         posting_date: new Date()
       });
   

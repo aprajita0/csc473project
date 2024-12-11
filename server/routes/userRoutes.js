@@ -323,7 +323,7 @@ router.post('/search-photocard-artist-name', async (req, res) => {
             return res.status(400).json({ error: 'Artist name is required.' });
         }
 
-        const photocards = await Photocard.find({ artist_name });
+        const photocards = await Photocard.find({ artist_name: { $regex: new RegExp(artist_name, 'i') } });
         if (!photocards || photocards.length === 0) {
             return res.status(404).json({ error: 'Photocard not found.' });
         }
@@ -352,6 +352,120 @@ router.get('/get-collection-names', authMiddleware, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error fetching collection names', details: error.message });
+    }
+});
+
+router.post('/search-photocard-group', async (req, res) => {
+    try {
+        const { group } = req.body;
+        if (!group) {
+            return res.status(400).json({ error: 'Group is required.' });
+        }
+
+        const photocards = await Photocard.find({ group: { $regex: new RegExp(group, 'i') } });
+        
+        if (!photocards || photocards.length === 0) {
+            return res.status(404).json({ error: 'Photocard not available for the group.' });
+        }
+
+        res.status(200).json({ photocards });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error searching photocard', details: error.message });
+    }
+});
+
+router.post('/search-photocard-price-range', async (req, res) => {
+    try {
+        const { price_from, price_to } = req.body;
+        if (price_from === undefined || price_to === undefined) {
+            return res.status(400).json({ error: 'Both price_from and price_to are required.' });
+        }
+        const photocards = await Photocard.find({
+            cost: { $gte: price_from, $lte: price_to }
+        });
+
+        if (!photocards || photocards.length === 0) {
+            return res.status(404).json({ error: 'No photocards found in this price range.' });
+        }
+
+        res.status(200).json({ photocards });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error searching photocard by price range', details: error.message });
+    }
+});
+
+router.post('/search-photocard-type', async (req, res) => {
+    try {
+        const { type } = req.body;
+        if (!type) {
+            return res.status(400).json({ error: 'Type is required.' });
+        }
+
+        if (type !== 'buying' && type !== 'selling') {
+            return res.status(400).json({ error: 'Invalid type. Must be either buying or selling.' });
+        }
+
+        const photocards = await Photocard.find({ type });
+        if (!photocards || photocards.length === 0) {
+            return res.status(404).json({ error: `No photocards found for ${type}.` });
+        }
+
+        res.status(200).json({ photocards });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error searching photocard by type', details: error.message });
+    }
+});
+
+router.post('/get-collection-by-username', authMiddleware, async (req, res) => {
+    try {
+        const { username } = req.body;
+        if (!username) {
+            return res.status(400).json({ error: 'Username is required.' });
+        }
+
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const otherUser = await User.findOne({ username });
+        if (!otherUser) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        const collection = await Collection.find({ owner_id: otherUser._id })
+            .populate('photocard_id');
+
+        if (!collection || collection.length === 0) {
+            return res.status(404).json({ error: 'No collections found for the user.' });
+        }
+
+        res.status(200).json({ collection });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching collection', details: error.message });
+    }
+});
+
+router.get('/get-photocards', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+        
+        const photocards = await Photocard.find({ owner_id: user._id });
+        if (!photocards || photocards.length === 0) {
+            return res.status(404).json({ error: 'No photocards found for the user.' });
+        }
+
+        res.status(200).json({ photocards });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching photocards', details: error.message });
     }
 });
 
