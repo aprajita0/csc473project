@@ -137,16 +137,16 @@ router.post('/editProfile', authMiddleware, async (req, res) => {
 
 router.get('/photocards', async (req, res) => {
   try {
-    // Retrieve all photocards from the database
-    const photocards = await Photocard.find();
+    const photocards = await Photocard.find().populate('owner_id', 'username profile_pic'); 
+    console.log('Photocards fetched:', photocards);
 
-    // Respond with the retrieved photocards
     res.status(200).json({ photocards });
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching photocards:', error);
     res.status(500).json({ error: 'Error fetching photocards', details: error.message });
   }
 });
+
 
 router.post('/add-photocard-collection', authMiddleware, async (req, res) => {
   try {
@@ -470,16 +470,16 @@ router.get('/get-photocards', authMiddleware, async (req, res) => {
 });
 
 router.get('/get-photocard-info/:id', async (req, res) => {
-  console.log(`Fetching photocard with ID: ${req.params.id}`); 
+  console.log(`Fetching photocard with ID: ${req.params.id}`);
   try {
-      const photocard = await Photocard.findById(req.params.id);
-      if (!photocard) {
-          return res.status(404).json({ error: 'Photocard not found.' });
-      }
-      res.status(200).json(photocard);
+    const photocard = await Photocard.findById(req.params.id).populate('owner_id', 'username profile_pic'); 
+    if (!photocard) {
+      return res.status(404).json({ error: 'Photocard not found.' });
+    }
+    res.status(200).json(photocard);
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error fetching photocard', details: error.message });
+    console.error(error);
+    res.status(500).json({ error: 'Error fetching photocard', details: error.message });
   }
 });
 
