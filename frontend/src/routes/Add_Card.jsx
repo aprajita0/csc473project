@@ -39,7 +39,7 @@ const Add_Card = () => {
           const nameIndex = headers.indexOf("Full Name"); 
           const formerGroupIndex = headers.indexOf("Former Group"); 
           const otherGroupIndex = headers.indexOf("Other Group");
-          const names = data.values.slice(1).map((row) => row[nameIndex]);
+          const names = headers.indexOf("Stage Name");
           const groups = data.values.slice(1).flatMap((row) => [
             row[formerGroupIndex],
             row[otherGroupIndex],
@@ -239,7 +239,7 @@ const Add_Card = () => {
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="artist_name">Idol Name:</label>
-              <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Search idol name"  onKeyDown={handleEnterIdols}required/>
+              <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Enter an idol name"  onKeyDown={handleEnterIdols}required/>
               {idolLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {idolLookUp.map((name, index) => (
@@ -255,8 +255,8 @@ const Add_Card = () => {
               <input className="field-input" type="file" id="card_image" accept="image/jpeg, image/jpg" onChange={handleImage} required />
             </div>
             <div className="label-container">
-              <label className="field-label" htmlFor="artistGroup">Group Lookup:</label>
-              <input className="field-input" type="text" id="artistGroup" value={groupQuery}  placeholder="Search for a group name" onChange={handleGroupSearch}  onKeyDown={handleEnterGroups}/>
+              <label className="field-label" htmlFor="artistGroup">Group Name:</label>
+              <input className="field-input" type="text" id="artistGroup" value={groupQuery}  placeholder="Enter a group name" onChange={handleGroupSearch}  onKeyDown={handleEnterGroups}/>
               {groupLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {groupLookUp.map((group, index) => (
