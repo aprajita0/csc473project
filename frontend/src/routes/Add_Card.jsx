@@ -20,8 +20,10 @@ const Add_Card = () => {
   const [selectedCollection, setSelectedCollection] = useState('My Collection');
 
   const [formData, setFormData] = useState({
-    artist_name: '',
     title: '',
+    type: '',
+    artist_name: '',
+    group:'',
     cost: '',
     details: '',
     image: null,
@@ -36,10 +38,9 @@ const Add_Card = () => {
         const data = await response.json();
         if (data.values) {
           const headers = data.values[0]; 
-          const nameIndex = headers.indexOf("Full Name"); 
           const formerGroupIndex = headers.indexOf("Former Group"); 
           const otherGroupIndex = headers.indexOf("Other Group");
-          const names = headers.indexOf("Stage Name");
+          const names = data.values.slice(1).map((row) => row[namesIndex]); 
           const groups = data.values.slice(1).flatMap((row) => [
             row[formerGroupIndex],
             row[otherGroupIndex],
@@ -168,14 +169,14 @@ const Add_Card = () => {
 
     
     const form = new FormData();
-      form.append('artist_name',  idolQuery.trim());
       form.append('title', formData.title);
-      form.append('details', formData.details);
-      form.append('cost', formData.cost);
-      form.append('artistGroup', formData.artistGroup);
-      form.append('collectionName', selectedCollection); 
-      form.append('year_released', formData.year_released);
+      form.append('type', formData.type);
+      form.append('artist_name',  idolQuery.trim());
+      form.append('group', formData.groups);
       form.append('image', formData.image);
+      form.append('cost', formData.cost);  
+      form.append('details', formData.details);
+      form.append('collectionName', selectedCollection); 
 
     try {
       const token = localStorage.getItem('token');
@@ -238,6 +239,14 @@ const Add_Card = () => {
               <input className="field-input" type="text" id="title" value={formData.title} onChange={handleChange} placeholder="Enter the photocard title" required/>
             </div>
             <div className="label-container">
+              <label className="field-label" htmlFor="type">Listing Type:</label>
+              <select className="field-input" id="type" value={formData.type} onChange={handleChange} required>
+                <option value="" disabled selected>Select a type</option>
+                <option value="buying">Buying</option>
+                <option value="selling">Selling</option>
+              </select>
+            </div>
+            <div className="label-container">
               <label className="field-label" htmlFor="artist_name">Idol Name:</label>
               <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Enter an idol name"  onKeyDown={handleEnterIdols}required/>
               {idolLookUp.length > 0 && (
@@ -251,10 +260,6 @@ const Add_Card = () => {
               )}
             </div>
             <div className="label-container">
-              <label className="field-label" htmlFor="card_image">Photocard Photo:</label>
-              <input className="field-input" type="file" id="card_image" accept="image/jpeg, image/jpg" onChange={handleImage} required />
-            </div>
-            <div className="label-container">
               <label className="field-label" htmlFor="artistGroup">Group Name:</label>
               <input className="field-input" type="text" id="artistGroup" value={groupQuery}  placeholder="Enter a group name" onChange={handleGroupSearch}  onKeyDown={handleEnterGroups}/>
               {groupLookUp.length > 0 && (
@@ -266,6 +271,10 @@ const Add_Card = () => {
                   ))}
                 </ul>
               )}
+            </div>
+            <div className="label-container">
+              <label className="field-label" htmlFor="card_image">Photocard Photo:</label>
+              <input className="field-input" type="file" id="card_image" accept="image/jpeg, image/jpg" onChange={handleImage} required />
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="cost">Cost:</label>
@@ -285,10 +294,6 @@ const Add_Card = () => {
                   </option>
                 ))}
               </select>
-            </div>
-            <div className="label-container">
-              <label className="field-label" htmlFor="year_released">Year Released:</label>
-              <input className="field-input" type="number" id="year_released" value={formData.year_released} onChange={handleChange} placeholder="Enter the year released" min="1900" step="1" />
             </div>
             <button className="return-card" type="button" onClick={() => navigate('/Profile')}>Return</button>
             <button type="submit" className="submit-card">Add Photocard</button>
