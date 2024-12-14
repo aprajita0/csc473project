@@ -6,12 +6,14 @@ const express = require('express');
 const userRoutes = require('./routes/userRoutes');
 const uploadRoutes = require('./routes/upload');
 const messageRoutes = require('./routes/messageRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 const app = express();
 
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api/users', messageRoutes);
+app.use('/api/users', commentRoutes);
 app.use('/api', uploadRoutes);
 
 app.get('/', (req, res) => {

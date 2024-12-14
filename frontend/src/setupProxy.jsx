@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api', 
     createProxyMiddleware({
-      target: 'http://localhost:5000',
+      target: 'https://server-sooty-gamma-45.vercel.app/',
       changeOrigin: true, 
     })
   );
