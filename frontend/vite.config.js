@@ -6,7 +6,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'https://server-sooty-gamma-45.vercel.app/', 
+                target: 'http://localhost:5000', 
                 changeOrigin: true,
                 secure: true,
             },
