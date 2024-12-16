@@ -21,13 +21,13 @@ const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, 
           </p>
 
           <div id="poster-info" className="text-sm space-x-1 flex items-center">
-            <div id="poster-pfp" className="flex justify-center items-center">
+            {/* <div id="poster-pfp" className="flex justify-center items-center">
               <img
                 src={owner?.profile_pic}
                 alt={`${owner?.username}'s profile`}
                 className="w-6 h-6 rounded-full mr-2"
               />
-            </div>
+            </div> */}
             <div id="poster-username" className="text-xs flex items-center">
               {owner?.username || 'Unknown'}
             </div>
