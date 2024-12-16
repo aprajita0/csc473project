@@ -31,7 +31,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/aprajita0/csc473project">
-    <img src="https://tinyurl.com/myidollist" alt="MyIdolList">
+    <img src="./images/myidollist_logo.png" alt="MyIdolList">
   </a>
 
 <h3 align="center">MyIdolList</h3>
@@ -49,8 +49,6 @@
     <a href="https://github.com/github_username/repo_name/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -83,11 +81,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<img src="./images/landing_page.png" alt="Landing Page">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
@@ -149,17 +145,12 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 #### Trading Hub
-<img src="https://tinyurl.com/2f8z5j75" alt="Trading Hub">
+<img src="./images/trading_hub.png" alt="Trading Hub">
 
 #### User's Trade Post
-<img src="https://tinyurl.com/yae9z9k2" alt="User Trade Post Page">
-
-#### Photocards Catalog
-<img src="https://tinyurl.com/yhjcwfsw" alt="Photocards Catalog">
+<img src="./images/user_trade_post.png" alt="User Trade Post Page">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -223,7 +214,6 @@ Project Link: [https://github.com/aprajita0/csc473project])
 * []() [CSS Styling Guide](https://www.w3schools.com/css/css_list.asp)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
