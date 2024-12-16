@@ -44,23 +44,23 @@ const Register = () => {
   return (
     <div className='LandingPage mt-28 flex flex-col flex-grow justify-between min-h-screen'>
       <Navbar />
-      <form className="login-container" onSubmit={handleRegister}>
-        <section className="form-container">
-          <div className="form-title">
+      <form className="reg-container" onSubmit={handleRegister}>
+        <section className="reg-form-container">
+          <div className="reg-form-title">
             <h1>Register</h1>
-            <div className="field-group">
-                <label className="log_field-label" htmlFor="username">Username:</label>
-                <input className="login-input" type="text" id="username" placeholder="Enter your username" required value={username} onChange={(e) => setUsername(e.target.value)}/>
+            <div className="reg-field-group">
+                <label className="reg_field-label" htmlFor="username">Username:</label>
+                <input className="reg-input" type="text" id="username" placeholder="Enter your username" required value={username} onChange={(e) => setUsername(e.target.value)}/>
             </div>
-            <div className="field-group">
-                <label className="log_field-label" htmlFor="password">Password:</label>
-                <input className="login-input" type="password" id="password" placeholder="Enter your password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <div className="reg-field-group">
+                <label className="reg_field-label" htmlFor="password">Password:</label>
+                <input className="reg-input" type="password" id="password" placeholder="Enter your password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
-            <div className="field-group">
-                <label className="log_field-label" htmlFor="email">Email:</label>
-                <input className="login-input" type="email" id="email" placeholder="Enter your email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+            <div className="reg-field-group">
+                <label className="reg_field-label" htmlFor="email">Email:</label>
+                <input className="reg-input" type="email" id="email" placeholder="Enter your email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
             </div>
-            <div className="form-buttons">
+            <div className="reg-form-buttons">
                 <button className="register" type="submit"> Register</button> 
                 <button className="login" onClick={() => navigate('/Login')}>Login</button>
             </div>
@@ -76,4 +76,3 @@ const Register = () => {
 };
 
 export default Register;
-
