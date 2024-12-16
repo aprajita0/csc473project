@@ -120,7 +120,8 @@ const Add_Card = () => {
   };
 
   const handleGroupClick = (group) => {
-    setFormData((prevData) => ({ ...prevData, artistGroup: group }));
+    console.log('Group clicked:', group);
+    setFormData((prevData) => ({ ...prevData, group: group }));
     setGroupQuery(group);
     setGroupLookUp([]);
   };
@@ -176,22 +177,19 @@ const Add_Card = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setFormData((prevData) => ({
-      ...prevData,
-      artist_name: idolQuery.trim(),
-    }));
+    console.log('Form data:', formData);
+    console.log('Form image data:', formData.image);
 
-    if (!idolQuery.trim() || !formData.title || !formData.details || !formData.cost || !formData.image) {
+    if (!idolQuery.trim() || !formData.title || !formData.details || !formData.cost || !formData.image || !formData.group) {
       alert('All fields are required.');
       return;
     }
-
 
     const form = new FormData();
     form.append('title', formData.title);
     form.append('type', formData.type);
     form.append('artist_name', idolQuery.trim());
-    form.append('group', formData.groups);
+    form.append('group', formData.group);
     form.append('image', formData.image);
     form.append('cost', formData.cost);
     form.append('details', formData.details);
@@ -222,8 +220,8 @@ const Add_Card = () => {
           }),
         });
 
-        if (!response.ok) {
-          const errorText = await response.text();
+        if (!addCollectionResponse.ok) {
+          const errorText = await addCollectionResponse.text();
           console.error('Server Response:', errorText);
           alert('Server error, please try again later');
         }
@@ -280,11 +278,26 @@ const Add_Card = () => {
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="artistGroup">Group Name:</label>
-              <input className="field-input" type="text" id="artistGroup" value={groupQuery} placeholder="Enter a group name" onChange={handleGroupSearch} onKeyDown={handleEnterGroups} />
+              <input
+                className="field-input"
+                type="text"
+                id="artistGroup"
+                value={formData.group} 
+                placeholder="Enter a group name"
+                onChange={(e) => setFormData({ ...formData, group: e.target.value })}  
+                onKeyDown={handleEnterGroups}
+              />
               {groupLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {groupLookUp.map((group, index) => (
-                    <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleGroupClick(group)}>
+                    <li
+                      key={index}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        setFormData({ ...formData, group: group });  
+                        setGroupQuery(group); 
+                      }}
+                    >
                       {group}
                     </li>
                   ))}

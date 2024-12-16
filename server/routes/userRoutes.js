@@ -248,8 +248,6 @@ router.post('/add-photocard-collection-name', authMiddleware, async (req, res) =
       return res.status(400).json({ error: 'Collection name is required.' });
     }
 
-
-
     const collection = new Collection({
       owner_id: req.user.id,
       photocard_id: photocard_id,
