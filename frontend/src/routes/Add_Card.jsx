@@ -13,17 +13,17 @@ const Add_Card = () => {
   const [groupLookUp, setGroupLookUp] = useState([]);
   const [idolQuery, setIdolQuery] = useState('');
   const [groupQuery, setGroupQuery] = useState('');
-  const SHEET_ID = "1mtv8zZ6zQDMW-tgOdoeAb9zVpDl2W4ck_utueOpTH1E"; 
+  const SHEET_ID = "1mtv8zZ6zQDMW-tgOdoeAb9zVpDl2W4ck_utueOpTH1E";
   const API_KEY = "AIzaSyDHZr7ul0XqU07rv_12n4c9celWBy8SNO0";
   const user = localStorage.getItem('user_id');
-  const [userCollections, setUserCollections] = useState([]); 
+  const [userCollections, setUserCollections] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState('My Collection');
 
   const [formData, setFormData] = useState({
     title: '',
     type: '',
     artist_name: '',
-    group:'',
+    group: '',
     cost: '',
     details: '',
     image: null,
@@ -37,16 +37,16 @@ const Add_Card = () => {
         const response = await fetch(url);
         const data = await response.json();
         if (data.values) {
-          const headers = data.values[0]; 
-          const formerGroupIndex = headers.indexOf("Former Group"); 
+          const headers = data.values[0];
+          const formerGroupIndex = headers.indexOf("Former Group");
           const otherGroupIndex = headers.indexOf("Other Group");
-          const names = data.values.slice(1).map((row) => row[namesIndex]); 
+          const names = data.values.slice(1).map((row) => row[namesIndex]);
           const groups = data.values.slice(1).flatMap((row) => [
             row[formerGroupIndex],
             row[otherGroupIndex],
-          ]).filter(Boolean); 
+          ]).filter(Boolean);
           setIdolNames(names);
-          setGroupNames([...new Set(groups)]); 
+          setGroupNames([...new Set(groups)]);
         }
       } catch (error) {
         console.error('Error fetching data');
@@ -78,7 +78,7 @@ const Add_Card = () => {
 
 
   const handleCollectionPick = (e) => {
-    const value = e.target.value || 'My Collection'; 
+    const value = e.target.value || 'My Collection';
     setSelectedCollection(value);
     setFormData((prevData) => ({ ...prevData, collectionName: value }));
   };
@@ -93,7 +93,7 @@ const Add_Card = () => {
     }));
     if (value.trim()) {
       const filtered = idolNames.filter((name) => name?.toLowerCase().includes(value.toLowerCase()));
-      setIdolLookUp(filtered.slice(0, 15)); 
+      setIdolLookUp(filtered.slice(0, 15));
     } else {
       setIdolLookUp([]);
     }
@@ -120,31 +120,50 @@ const Add_Card = () => {
   };
 
   const handleGroupClick = (group) => {
-    setFormData((prevData) => ({ ...prevData, artistGroup: group}));
+    setFormData((prevData) => ({ ...prevData, artistGroup: group }));
     setGroupQuery(group);
     setGroupLookUp([]);
   };
 
   const handleEnterIdols = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); 
+      e.preventDefault();
       setIdolLookUp([]);
     }
   };
-  
+
   const handleEnterGroups = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      setGroupLookUp([]); 
+      setGroupLookUp([]);
     }
   };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+
+    if (id === 'cost') {
+      // check if value is valid num, does not have > 2 decimal places, and is >= 1
+      const regex = /^\d*(\.\d{0,2})?$/;
+
+      // check if value is a valid number and >= 1
+      if (regex.test(value) && (parseFloat(value) >= 1 || value === '')) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [id]: value,
+        }));
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          [id]: '', // clear input if value is invalid or less than 1
+        }));
+      }
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [id]: value,
+      }));
+    }
   };
 
   const handleImage = (e) => {
@@ -159,7 +178,7 @@ const Add_Card = () => {
 
     setFormData((prevData) => ({
       ...prevData,
-      artist_name: idolQuery.trim(), 
+      artist_name: idolQuery.trim(),
     }));
 
     if (!idolQuery.trim() || !formData.title || !formData.details || !formData.cost || !formData.image) {
@@ -167,16 +186,16 @@ const Add_Card = () => {
       return;
     }
 
-    
+
     const form = new FormData();
-      form.append('title', formData.title);
-      form.append('type', formData.type);
-      form.append('artist_name',  idolQuery.trim());
-      form.append('group', formData.groups);
-      form.append('image', formData.image);
-      form.append('cost', formData.cost);  
-      form.append('details', formData.details);
-      form.append('collectionName', selectedCollection); 
+    form.append('title', formData.title);
+    form.append('type', formData.type);
+    form.append('artist_name', idolQuery.trim());
+    form.append('group', formData.groups);
+    form.append('image', formData.image);
+    form.append('cost', formData.cost);
+    form.append('details', formData.details);
+    form.append('collectionName', selectedCollection);
 
     try {
       const token = localStorage.getItem('token');
@@ -194,24 +213,24 @@ const Add_Card = () => {
         const addCollectionResponse = await fetch('/api/users/add-photocard-collection-name', {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify({
-              photocard_id: photocardId,
-              collection_name: formData.collectionName?.trim() || 'My Collection',
+            photocard_id: photocardId,
+            collection_name: formData.collectionName?.trim() || 'My Collection',
           }),
-      });
+        });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server Response:', errorText);
-        alert('Server error, please try again later');
-      }
-      
-      const collectionResult = await addCollectionResponse.json();
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Server Response:', errorText);
+          alert('Server error, please try again later');
+        }
+
+        const collectionResult = await addCollectionResponse.json();
         if (!addCollectionResponse.ok || !collectionResult.message) {
-            alert('Failed to add photocard to the collection');
+          alert('Failed to add photocard to the collection');
         }
         alert('Photocard added successfully!');
         navigate('/Profile');
@@ -236,7 +255,7 @@ const Add_Card = () => {
             <h1>Add a PhotoCard</h1>
             <div className="label-container">
               <label className="field-label" htmlFor="collectionName">Photocard Title:</label>
-              <input className="field-input" type="text" id="title" value={formData.title} onChange={handleChange} placeholder="Enter the photocard title" required/>
+              <input className="field-input" type="text" id="title" value={formData.title} onChange={handleChange} placeholder="Enter the photocard title" required />
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="type">Listing Type:</label>
@@ -248,11 +267,11 @@ const Add_Card = () => {
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="artist_name">Idol Name:</label>
-              <input className="field-input" type="text" id="artist_name"value={idolQuery} onChange={handleSearchIdols} placeholder="Enter an idol name"  onKeyDown={handleEnterIdols}required/>
+              <input className="field-input" type="text" id="artist_name" value={idolQuery} onChange={handleSearchIdols} placeholder="Enter an idol name" onKeyDown={handleEnterIdols} required />
               {idolLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {idolLookUp.map((name, index) => (
-                    <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer"onClick={() => handleLookupClick(name)}>
+                    <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleLookupClick(name)}>
                       {name}
                     </li>
                   ))}
@@ -261,7 +280,7 @@ const Add_Card = () => {
             </div>
             <div className="label-container">
               <label className="field-label" htmlFor="artistGroup">Group Name:</label>
-              <input className="field-input" type="text" id="artistGroup" value={groupQuery}  placeholder="Enter a group name" onChange={handleGroupSearch}  onKeyDown={handleEnterGroups}/>
+              <input className="field-input" type="text" id="artistGroup" value={groupQuery} placeholder="Enter a group name" onChange={handleGroupSearch} onKeyDown={handleEnterGroups} />
               {groupLookUp.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 w-[410px] mt-1 max-h-40 overflow-y-auto z-10">
                   {groupLookUp.map((group, index) => (
