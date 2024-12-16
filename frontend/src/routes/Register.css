@@ -1,26 +1,26 @@
-.login-container {
+.reg-container {
     max-width: 1200px;
     margin-left: 100px;
     margin-top: 40px;
 }
 
-.form-container {
+.reg-form-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
 }
 
-.form-title {
+.reg-form-title {
     max-width: 600px;
 }
 
-.form-title  h1 {
+.reg-form-title  h1 {
     font-size: 40px;
     margin-bottom: 20px;
 }
 
-.form-buttons {
+.reg-form-buttons {
     margin-top: 40px;
     display: flex;
     margin-left: 30px;
@@ -55,11 +55,11 @@
     color: #fff;
 }
 
-.field-group {
+.reg-field-group {
     margin-bottom: 15px; 
 }
 
-.log_field-label {
+.reg_field-label {
     font-size: 18px;
     margin-left: 30px;
     color: #000;
@@ -67,7 +67,7 @@
     margin-bottom: 10px;
 }
 
-.login-input {
+.reg-input {
     padding: 5px;
     margin-left: 30px;
     border: 1px solid #ccc;
@@ -83,5 +83,4 @@
     margin-left: auto;
     height: 500px;
 }
-
 
