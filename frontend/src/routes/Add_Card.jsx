@@ -252,11 +252,15 @@ const Add_Card = () => {
           <div className="page-message">
             <h1>Add a PhotoCard</h1>
             <div className="label-container">
+              <label className="field-label" htmlFor="card_image">Upload a Photocard:</label>
+              <input className="field-input" type="file" id="card_image" accept="image/jpeg, image/jpg" onChange={handleImage} required />
+            </div>
+            <div className="label-container">
               <label className="field-label" htmlFor="collectionName">Photocard Title:</label>
               <input className="field-input" type="text" id="title" value={formData.title} onChange={handleChange} placeholder="Enter the photocard title" required />
             </div>
             <div className="label-container">
-              <label className="field-label" htmlFor="type">Listing Type:</label>
+              <label className="field-label" htmlFor="type">Buying or Selling?</label>
               <select className="field-input" id="type" value={formData.type} onChange={handleChange} required>
                 <option value="" disabled selected>Select a type</option>
                 <option value="buying">Buying</option>
@@ -305,19 +309,15 @@ const Add_Card = () => {
               )}
             </div>
             <div className="label-container">
-              <label className="field-label" htmlFor="card_image">Photocard Photo:</label>
-              <input className="field-input" type="file" id="card_image" accept="image/jpeg, image/jpg" onChange={handleImage} required />
-            </div>
-            <div className="label-container">
               <label className="field-label" htmlFor="cost">Cost:</label>
               <input className="field-input" type="number" id="cost" value={formData.cost} onChange={handleChange} min="0" step="0.01" placeholder="Enter an amount" required />
             </div>
             <div className="label-container">
-              <label className="field-label" htmlFor="details">Details:</label>
+              <label className="field-label" htmlFor="details">Additional Details:</label>
               <textarea className="field-input" id="details" value={formData.details} onChange={handleChange} placeholder="Enter the details of your photocard" required rows="3"></textarea>
             </div>
             <div className="label-container">
-              <label className="field-label" htmlFor="collectionName">Collection Name:</label>
+              <label className="field-label" htmlFor="collectionName">Your Collection Name:</label>
               <select id="collectionName" className="field-input" value={selectedCollection} onChange={handleCollectionPick}>
                 <option value="My Collection">Select a Collection (Optional)</option>
                 {userCollections.map((collection, index) => (
