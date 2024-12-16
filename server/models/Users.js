@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true, maxlength: 25 },
-    password: { type: String, required: true},
+    username: { type: String },
+    password: { type: String},
+    googleId: { type: String },
     email: { type: String, required: true},
     profile_pic: { type: String}, // URL to profile picture
     full_name: { type: String, maxlength: 100},
