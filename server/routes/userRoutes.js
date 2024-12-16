@@ -63,6 +63,13 @@ router.post('/auth/google', async (req, res) => {
   }
 });
 
+router.use('/auth/google/callback', (req, res, next) => {
+  res.removeHeader('Cross-Origin-Opener-Policy');
+  res.removeHeader('Cross-Origin-Embedder-Policy');
+  next();
+});
+
+
 // Middleware to verify token
 const authMiddleware = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
