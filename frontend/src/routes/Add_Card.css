@@ -47,9 +47,6 @@
 .add-image {
     justify-content: space-around;
     align-items: flex-start; 
-    height: 700px;
-    padding-top: 30px;
-    padding-right: 80px;
 }
 
 .submit-card {

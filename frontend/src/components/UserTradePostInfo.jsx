@@ -29,7 +29,7 @@ const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, 
               />
             </div> */}
             <div id="poster-username" className="text-xs flex items-center">
-              {owner?.username || 'Unknown'}
+              {owner?.username || 'originalPoster'}
             </div>
           </div>
 
@@ -57,7 +57,7 @@ const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, 
           <div id='msg-poster'>
             <button className="drop-shadow-md text-sm border rounded px-12 py-2 bg-[#434343] text-white font-bold
                                 hover:brightness-90 hover:scale-105 ease-in-out duration-300">
-              Message tradePoster!
+              Message {owner?.username || 'originalPoster'}!
             </button>
           </div>
 

@@ -2,8 +2,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import kpop_card from '../assets/photocard.png';
 import './Add_Card.css';
+import UserTradePostCard from '../components/UserTradePostCard'
 
 const Add_Card = () => {
   const navigate = useNavigate();
@@ -244,21 +244,32 @@ const Add_Card = () => {
   return (
     <div className='LandingPage mt-28 flex flex-col flex-grow justify-between min-h-screen'>
       <Navbar />
-      <main className="new-container">
-        <div className="add-image">
-          <img src={kpop_card} alt="add-image" />
+      <main className="new-container items-center">
+
+        <div className="add-image pr-16 relative -top-24">
+          {formData.image ? (
+            <UserTradePostCard
+              artist_name={formData.artist_name}
+              group={formData.group}
+              image={URL.createObjectURL(formData.image)}
+              cost={formData.cost}
+              title={formData.title}
+              details={formData.details}
+              type={formData.type}
+              posting_date={formData.posting_date}
+            />
+          ) : null}
         </div>
+
         <form onSubmit={handleSubmit} className="top-container">
           <div className="page-message">
-            <h1>Add a PhotoCard</h1>
+            <h1 className='text-center'>Add a photocard!</h1>
             <div className="label-container">
               <label className="field-label" htmlFor="card_image">Upload a Photocard:</label>
-              <input className="field-input" type="file" id="card_image" accept="image/jpeg, image/jpg" onChange={handleImage} required />
+              <input className="field-input" type="file" id="card_image" accept="image/png, image/jpeg, image/jpg" onChange={handleImage} required />
             </div>
-            <div className="label-container">
-              <label className="field-label" htmlFor="collectionName">Photocard Title:</label>
-              <input className="field-input" type="text" id="title" value={formData.title} onChange={handleChange} placeholder="Enter the photocard title" required />
-            </div>
+
+
             <div className="label-container">
               <label className="field-label" htmlFor="type">Buying or Selling?</label>
               <select className="field-input" id="type" value={formData.type} onChange={handleChange} required>
@@ -267,6 +278,12 @@ const Add_Card = () => {
                 <option value="selling">Selling</option>
               </select>
             </div>
+
+            <div className="label-container">
+              <label className="field-label" htmlFor="cost">Cost:</label>
+              <input className="field-input" type="number" id="cost" value={formData.cost} onChange={handleChange} min="0" step="0.01" placeholder="Enter an amount" required />
+            </div>
+
             <div className="label-container">
               <label className="field-label" htmlFor="artist_name">Idol Name:</label>
               <input className="field-input" type="text" id="artist_name" value={idolQuery} onChange={handleSearchIdols} placeholder="Enter an idol name" onKeyDown={handleEnterIdols} required />
@@ -280,15 +297,16 @@ const Add_Card = () => {
                 </ul>
               )}
             </div>
+
             <div className="label-container">
               <label className="field-label" htmlFor="artistGroup">Group Name:</label>
               <input
                 className="field-input"
                 type="text"
                 id="artistGroup"
-                value={formData.group} 
+                value={formData.group}
                 placeholder="Enter a group name"
-                onChange={(e) => setFormData({ ...formData, group: e.target.value })}  
+                onChange={(e) => setFormData({ ...formData, group: e.target.value })}
                 onKeyDown={handleEnterGroups}
               />
               {groupLookUp.length > 0 && (
@@ -298,8 +316,8 @@ const Add_Card = () => {
                       key={index}
                       className="p-2 hover:bg-gray-100 cursor-pointer"
                       onClick={() => {
-                        setFormData({ ...formData, group: group });  
-                        setGroupQuery(group); 
+                        setFormData({ ...formData, group: group });
+                        setGroupQuery(group);
                       }}
                     >
                       {group}
@@ -308,10 +326,12 @@ const Add_Card = () => {
                 </ul>
               )}
             </div>
+
             <div className="label-container">
-              <label className="field-label" htmlFor="cost">Cost:</label>
-              <input className="field-input" type="number" id="cost" value={formData.cost} onChange={handleChange} min="0" step="0.01" placeholder="Enter an amount" required />
+              <label className="field-label" htmlFor="collectionName">Photocard Title:</label>
+              <input className="field-input" type="text" id="title" value={formData.title} onChange={handleChange} placeholder="Enter the photocard title" required />
             </div>
+
             <div className="label-container">
               <label className="field-label" htmlFor="details">Additional Details:</label>
               <textarea className="field-input" id="details" value={formData.details} onChange={handleChange} placeholder="Enter the details of your photocard" required rows="3"></textarea>
@@ -327,10 +347,14 @@ const Add_Card = () => {
                 ))}
               </select>
             </div>
-            <button className="return-card" type="button" onClick={() => navigate('/Profile')}>Return</button>
-            <button type="submit" className="submit-card">Add Photocard</button>
+
+            <div className='text-center'>
+              <button className="return-card" type="button" onClick={() => navigate('/Profile')}>Return</button>
+              <button type="submit" className="submit-card">Add Photocard</button>
+            </div>
           </div>
         </form>
+        
       </main>
       <Footer />
     </div>
