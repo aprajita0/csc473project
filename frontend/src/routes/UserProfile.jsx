@@ -524,6 +524,6 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-export default UserProfile;
+
 
 
