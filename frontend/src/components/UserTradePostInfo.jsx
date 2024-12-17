@@ -73,7 +73,6 @@ const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, 
             </button>
           </div>
         </div>
-
       </div>
       <hr className="h-px my-2 bg-gray-200 border-1 dark:bg-gray-200"></hr>
     </div>
