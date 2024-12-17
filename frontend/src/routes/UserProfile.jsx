@@ -524,9 +524,4 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> d4fc0b5da817d38a773878be5cb40ea4914e81a4
 
