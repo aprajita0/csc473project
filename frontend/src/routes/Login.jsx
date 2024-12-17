@@ -32,7 +32,6 @@ const Login = () => {
       window.google.accounts.id.initialize({
         client_id: '314834991156-us92uqkpp6csa7gk6hut86527p0prkuk.apps.googleusercontent.com', 
         callback: handleGoogleResponse,
-        login_uri: 'https://csc473project.vercel.app/auth/google/callback',
       });
 
       window.google.accounts.id.renderButton(
@@ -43,7 +42,7 @@ const Login = () => {
   }, [googleScriptLoaded]);
 
   const handleGoogleResponse = (response) => {
-    fetch('/auth/google', {
+    fetch('api/users/auth/google', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

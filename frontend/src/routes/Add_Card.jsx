@@ -38,12 +38,13 @@ const Add_Card = () => {
         const data = await response.json();
         if (data.values) {
           const headers = data.values[0];
-          const formerGroupIndex = headers.indexOf("Former Group");
-          const otherGroupIndex = headers.indexOf("Other Group");
-          const names = data.values.slice(1).map((row) => row[namesIndex]);
+          const stageNameIndex = headers.indexOf("Stage Name");
+          const groupIndex = headers.indexOf("Group"); 
+          const formerGroupIndex = headers.indexOf("Former Group"); 
+          const names = data.values.slice(1).map((row) => row[stageNameIndex]).filter(Boolean);
           const groups = data.values.slice(1).flatMap((row) => [
-            row[formerGroupIndex],
-            row[otherGroupIndex],
+            row[groupIndex]?.trim(),    
+            row[formerGroupIndex]?.trim(),  
           ]).filter(Boolean);
           setIdolNames(names);
           setGroupNames([...new Set(groups)]);

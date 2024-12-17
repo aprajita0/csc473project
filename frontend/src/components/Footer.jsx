@@ -20,8 +20,6 @@ const Footer = () => {
           <div className='text-sm flex flex-col'>
             <Link className='hover:underline' to='/'>Home</Link>
             <Link className='hover:underline' to='/trading-hub'>Trade Hub</Link>
-            <Link className='hover:underline' to='/catalog'>Catalog</Link>
-            {/* <Link to='/search'>Search</Link> */}
           </div>
         </div>
         <div>
