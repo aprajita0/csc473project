@@ -1,3 +1,11 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const navigate = useNavigate();
+
+const handleMessageClick = () => {
+  navigate('/messages'); 
+};
 
 const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, details, type, posting_date }) => {
   const costNumber = cost && cost.$numberDecimal ? parseFloat(cost.$numberDecimal) : 0;
@@ -55,16 +63,9 @@ const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, 
 
         <div id='trade-buttons' className="space-y-1">
           <div id='msg-poster'>
-            <button className="drop-shadow-md text-sm border rounded px-12 py-2 bg-[#434343] text-white font-bold
+            <button  onClick={handleMessageClick}  className="drop-shadow-md text-sm border rounded px-12 py-2 bg-[#434343] text-white font-bold
                                 hover:brightness-90 hover:scale-105 ease-in-out duration-300">
               Message {owner?.username || 'originalPoster'}!
-            </button>
-          </div>
-
-          <div id='bookmark-post'>
-            <button className="drop-shadow-md text-sm border rounded px-12 py-2 bg-[#434343] text-white font-bold
-                                hover:brightness-90 hover:scale-105 ease-in-out duration-300">
-              Bookmark it!
             </button>
           </div>
         </div>
