@@ -53,6 +53,7 @@ const UserProfile = () => {
         setAddressTwo(user.address_line2 || 'New User - Enter your address line 2');
 
         setCurrentProfile({
+          username: user.username || 'New User',
           full_name: user.full_name || 'New User - Enter your Full Name',
           bio: user.bio || 'Hi, I am a new user!',
           address_line1: user.address_line1 || 'New User - Enter your address line 1',
@@ -307,6 +308,7 @@ const UserProfile = () => {
       }
 
       const updatedFields = {};
+      if (username !== currentProfile.username) updatedFields.username = username;
       if (fullname !== currentProfile.full_name) updatedFields.full_name = fullname;
       if (myBio !== currentProfile.bio) updatedFields.bio = myBio;
       if (addressOne !== currentProfile.address_line1) updatedFields.address_line1 = addressOne;
@@ -393,7 +395,13 @@ const UserProfile = () => {
         <div className="welcome-message space-y-3">
           <div className="flex items-center space-x-1">
             <UserCircleIcon className="h-16 w-16 text-gray-300" />
-            <h1 className="text-4xl font-bold text-gray-700"> Welcome Back, {username}!</h1>
+            <h1 className="text-4xl font-bold text-gray-700"> Welcome Back,{' '}
+              {isEditable ? (
+                <input type="text" value={username} onChange={(e) => setUserName(e.target.value)} className="border-b-2 border-gray-500 focus:outline-none focus:border-blue-500 text-4xl"/>
+              ) : (
+                username
+              )}!
+            </h1>
           </div>
         <div>
         <div className="flex items-center space-x-3">
@@ -513,6 +521,8 @@ const UserProfile = () => {
     </div>
   );
 };
+
+export default UserProfile;
 
 export default UserProfile;
 
