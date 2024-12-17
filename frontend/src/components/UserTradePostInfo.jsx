@@ -4,8 +4,12 @@ import { useNavigate } from 'react-router-dom';
 const navigate = useNavigate();
 
 const handleMessageClick = () => {
-  navigate('/messages'); 
-};
+  if (!isLoggedIn) {
+    navigate('/login');
+  } else {
+    navigate('/messages');
+  }
+}
 
 const UserTradePostInfo = ({ owner, id, artist_name, group, image, cost, title, details, type, posting_date }) => {
   const costNumber = cost && cost.$numberDecimal ? parseFloat(cost.$numberDecimal) : 0;
