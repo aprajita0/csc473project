@@ -107,7 +107,7 @@
   npm install npm@latest -g
   ```
 
-### Installation
+### Installation and Running the Website Locally
 
 1. Clone the repo
    ```sh
