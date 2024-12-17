@@ -109,29 +109,45 @@
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/github_username/repo_name.git
    ```
-3. Install NPM packages
+2. Navigate to the frontend directory
    ```sh
-   npm install
+   cd frontend
    ```
-4. Install VITE
+3. Install frontend dependencies
    ```sh
-   npm install vite
+   npm install 
    ```
-5. Enter your API in `config.js`
+3. Build the frontend
+   ```sh
+   npm run build
+   ```
+4. Navigate to the backend directory
+   ```sh
+   cd ../server
+   ```
+5. Install backend dependencies
+   ```sh
+   npm install 
+   ```
+7. Build the Website
+   ```sh
+   npm run dev
+   ```
+   This will run the website on localhost:5000.
+
+8. Enter your API in `config.js`
    ```js
    const API_KEY = 'ENTER YOUR API';
    ```
-6. Change git remote url to avoid accidental pushes to base project
+9. Change git remote url to avoid accidental pushes to base project
    ```sh
    git remote set-url origin github_username/repo_name
    git remote -v # confirm the changes
    ```
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
