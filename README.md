@@ -42,7 +42,7 @@
     <a href="https://github.com/aprajita0/csc473project"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://server-sooty-gamma-45.vercel.app/">View Demo</a>
+    <a href="https://csc473project.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/aprajita0/csc473project/issues">Report Bug</a>
     ·
@@ -170,7 +170,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Trade Photocards
+- [ ] Trade Photocards through messaging
 - [ ] Manage a Photocard Collection
 - [ ] Meet other collectors and traders
 
