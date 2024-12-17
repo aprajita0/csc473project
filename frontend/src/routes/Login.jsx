@@ -52,6 +52,8 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user_id', data.userid);
+        localStorage.setItem('isLoggedIn', 'true')
         navigate('/profile');
       })
       .catch(() => {
