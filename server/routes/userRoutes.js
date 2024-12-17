@@ -209,6 +209,33 @@ router.get('/photocards', async (req, res) => {
   }
 });
 
+router.get('/search-photocards', async (req, res) => {
+  try {
+    const { type, group, price_from, price_to, searchQuery } = req.query;
+
+    const filter = {};
+
+    if (type) filter.type = type; // 'buying' or 'selling'
+    if (group) filter.group = { $regex: new RegExp(group, 'i') };
+    if (price_from || price_to) {
+      filter.cost = {};
+      if (price_from) filter.cost.$gte = price_from;
+      if (price_to) filter.cost.$lte = price_to;
+    }
+    if (searchQuery) {
+      filter.$or = [
+        { artist_name: { $regex: new RegExp(searchQuery, 'i') } },
+        { title: { $regex: new RegExp(searchQuery, 'i') } },
+      ];
+    }
+
+    const photocards = await Photocard.find(filter).populate('owner_id', 'username profile_pic');
+    res.status(200).json({ photocards });
+  } catch (error) {
+    console.error('Error searching photocards:', error);
+    res.status(500).json({ error: 'Error searching photocards', details: error.message });
+  }
+});
 
 router.post('/add-photocard-collection', authMiddleware, async (req, res) => {
   try {
@@ -412,6 +439,19 @@ router.get('/get-collection-names', authMiddleware, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error fetching collection names', details: error.message });
+  }
+});
+
+router.get('/get-group-names', async (req, res) => {
+  try {
+    const groupNames = await Photocard.distinct('group'); // Fetch distinct group names
+    if (!groupNames || groupNames.length === 0) {
+      return res.status(404).json({ error: 'No group names found.' });
+    }
+    res.status(200).json({ groupNames });
+  } catch (error) {
+    console.error('Error fetching group names:', error);
+    res.status(500).json({ error: 'Error fetching group names', details: error.message });
   }
 });
 
